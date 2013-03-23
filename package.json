@@ -1,0 +1,35 @@
+{
+  "name": "doubleshot",
+  "description": "Separate BDD outline from content but run it in Mocha",
+  "version": "0.1.0",
+  "homepage": "https://github.com/twolfson/doubleshot",
+  "author": {
+    "name": "Todd Wolfson",
+    "email": "todd@twolfson.com",
+    "url": "http://twolfson.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/twolfson/doubleshot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/twolfson/doubleshot/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/twolfson/doubleshot/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/doubleshot",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "scripts": {
+    "test": "./bin/doubleshot"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.17"
+  },
+  "keywords": []
+}
