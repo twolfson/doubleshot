@@ -21,6 +21,9 @@
       "url": "https://github.com/twolfson/doubleshot/blob/master/LICENSE-MIT"
     }
   ],
+  "bin": {
+    "doubleshot": "bin/doubleshot"
+  },
   "main": "lib/doubleshot",
   "engines": {
     "node": ">= 0.6.0"
