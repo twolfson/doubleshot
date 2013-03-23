@@ -28,8 +28,18 @@
   "scripts": {
     "test": "./bin/doubleshot"
   },
+  "dependencies": {
+    "mocha": "~1.8.2"
+  },
   "devDependencies": {
     "grunt": "~0.3.17"
   },
-  "keywords": []
+  "keywords": [
+    "bdd",
+    "outline",
+    "content",
+    "separation",
+    "modular",
+    "mocha"
+  ]
 }
