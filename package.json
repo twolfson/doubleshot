@@ -32,7 +32,7 @@
     "test": "./bin/doubleshot"
   },
   "dependencies": {
-    "mocha": "~1.8.2",
+    "mocha": "1.8.2",
     "tmp": "0.0.16"
   },
   "devDependencies": {
