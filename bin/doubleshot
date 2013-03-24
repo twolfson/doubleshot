@@ -30,8 +30,9 @@ var glob = require('glob'),
     outlinePaths = argv.outline,
     contentPaths = argv.content;
 
+
 // If the testDir is an option, fallback to `test`
-if (testDir.match(/^\-/)) {
+if (testDir.match(/^\-/) || testDir === '') {
   testDir = 'test';
 }
 
