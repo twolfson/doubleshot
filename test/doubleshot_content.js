@@ -22,5 +22,21 @@ module.exports = {
   },
   'can run properly': function () {
     assert.strictEqual(this.sum3, 1);
+  },
+  'A test using async expansion': ['Async', 'expansion'],
+  'Async': function (done) {
+    setTimeout(function () {
+      this.asyncA = true;
+      done();
+    }, 1);
+  },
+  'expansion': function (done) {
+    setTimeout(function () {
+      this.asyncB = this.asyncA;
+      done();
+    }, 1);
+  },
+  'still completes': function () {
+    assert.strictEqual(this.asyncB, true);
   }
 };
