@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 
-// TODO: Cases to handle
-// TODO: Test aliasing
-// TODO: Test expansion
-// TODO: Test async expansion
-
 // Invoke via `doubleshot`
 // Invoke via `doubleshot test`
 // Invoke via `doubleshot --outline test/outline --content test/content`
