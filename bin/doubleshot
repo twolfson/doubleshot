@@ -23,9 +23,9 @@ var glob = require('glob'),
     outlinePaths = parsed.outline,
     contentPaths = parsed.content;
 
-// TODO: Support multiple extensions (and be extensible about it) -- look at mocha
-  var path = require('path'),
-      cwd = process.cwd();
+// Helper function to filter for existing file paths
+var path = require('path'),
+    cwd = process.cwd();
 function resolveFiles(params) {
   // Localize params
   var paths = params.paths,
