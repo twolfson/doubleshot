@@ -2,4 +2,16 @@
   "A test": {
     "can be run": true
   }
+}, {
+  "A test": {
+    "can use aliasing": true
+  }
+}, {
+  "A test using expansion": {
+    "can be run": true
+  }
+}, {
+  "A test using async expansion": {
+    "still completes": true
+  }
 }]
