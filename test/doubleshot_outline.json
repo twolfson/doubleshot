@@ -1,5 +1,6 @@
 [{
   "A test": {
-    "can be run": true
+    "can be run": true,
+    "wasd": true
   }
 }]
