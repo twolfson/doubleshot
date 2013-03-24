@@ -80,39 +80,37 @@ A basic example can be found in the [getting-started][getting-started] section. 
 ```js
 // outline.json
 {
-  // Spanish for: One plus two
-  "Uno mas dos": {
-    // Spanish for: is equal to three
-    "son tres": true
+  "One plus two": {
+    "is equal to three": true
   }
 }
 
 // content.js
 {
-  'Uno mas dos': ['Uno', 'mas dos'],
-  'Uno': 'One',
+  // Breaks 'One plus two' action into 2 actions
+  'One plus two': ['One', 'plus two'],
   'One': function () {
     this.sum = 1;
   },
-  'mas done': 'plus two',
   'plus two': function () {
     this.sum += 2;
   },
-  'son tres': 'is equal to three',
-  'is equal to three': function () {
+  // Alias 'is equal to three' as 'equals three'
+  'is equal to three': 'equals three',
+  'equals three': function () {
     assert.strictEqual(this.sum, 3);
   }
 }
 
 // Runs test as
-describe('Uno mas dos', function () {
+describe('One plus two', function () {
   before(function () {
     // These are contained inside functions but have the same effect
     this.sum = 1;
     this.sum += 2;
   });
 
-  it('son tres', function () {
+  it('is equal to three', function () {
     assert.strictEqual(this.sum, 3);
   });
 });
