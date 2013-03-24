@@ -6,7 +6,13 @@ module.exports = {
   'can be run': function () {
     assert.strictEqual(this.sum, 1);
   },
-  'can use aliasing': 'can be run',
+  'using aliasing': 'copy sum',
+  'copy sum': function () {
+    this.sum2 = this.sum;
+  },
+  'runs': function () {
+    assert.strictEqual(this.sum2, 1);
+  },
   'A test using expansion': ['Three', 'minus two'],
   'Three': function () {
     this.sum3 = 3;

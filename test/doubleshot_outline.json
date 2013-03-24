@@ -4,7 +4,9 @@
   }
 }, {
   "A test": {
-    "can use aliasing": true
+    "using aliasing": {
+      "runs": true
+    }
   }
 }, {
   "A test using expansion": {
