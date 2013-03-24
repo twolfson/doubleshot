@@ -12,18 +12,45 @@ This concept has been birthed out of my previous attempts to achieve a cross-fra
 [crossbones]: https://github.com/Ensighten/crossbones
 
 ## Getting Started
-Install the module globally via: `npm install -g doubleshot`
+doubleshot is a global module and is run on the command line
 
-```javascript
-var doubleshot = require('doubleshot');
-doubleshot.awesome(); // "awesome"
+```shell
+npm install -g doubleshot # Installs doubleshot globally
+doubleshot # Runs content/outline files in test folder
 ```
 
 ## Documentation
-_(Coming soon)_
+`doubleshot` is run via the command line. By default, it attempts to find content and outline files in the `test` directory. They should match the following format.
+
+```shell
+test/{{name}}_outline.json OR test/outline/{{name}}.json
+test/{{name}}_content.js OR test/content/{{name}}.js
+Accepted file extensions are: `js`, `json`, `node`
+```
+
+Alternatively, you can specify a pattern to find them.
+
+```shell
+doubleshot --help
+
+Run separated BDD outlines and content on Mocha.
+Usage: node ./bin/doubleshot [test dir] [--options]
+
+Options:
+  --outline  Path to outline files (minimatch accepted)
+  --content  Path to content files (minimatch accepted)
+  --help     You are reading it                          [boolean]
+```
+
+There is an underlying library, however, it currently cannot be used in isolation.
 
 ## Examples
-_(Coming soon)_
+### Basic
+```js
+TODO: Grab from object-fusion
+```
+
+### Advanced (aliasing and expansion)
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.
