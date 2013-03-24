@@ -8,7 +8,7 @@
   }
 }, {
   "A test using expansion": {
-    "can be run": true
+    "can run properly": true
   }
 }, {
   "A test using async expansion": {

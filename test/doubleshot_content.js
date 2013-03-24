@@ -9,9 +9,12 @@ module.exports = {
   'can use aliasing': 'can be run',
   'A test using expansion': ['Three', 'minus two'],
   'Three': function () {
-    this.sum = 3;
+    this.sum3 = 3;
   },
   'minus two': function () {
-    this.sum -= 2;
+    this.sum3 -= 2;
+  },
+  'can run properly': function () {
+    assert.strictEqual(this.sum3, 1);
   }
 };
