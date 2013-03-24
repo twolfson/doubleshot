@@ -14,12 +14,4 @@
   "A test using async expansion": {
     "still completes": true
   }
-}, {
-  "An isolated test": {
-    "can be run": true
-  }
-}, {
-  "Another isolated test": {
-    "is isolated from its peers": true
-  }
 }]
