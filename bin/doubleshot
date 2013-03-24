@@ -10,28 +10,58 @@ var nopt = require('nopt'),
 
 // Localize and fallback info from dir
 var glob = require('glob'),
-    dir = parsed.argv.remain[0] || 'test',
+    testDir = parsed.argv.remain[0] || 'test',
     outlinePaths = parsed.outline,
     contentPaths = parsed.content;
 
-// Begin resolving outlineFiles
-var outlineFiles = [];
-
 // TODO: Support multiple extensions (and be extensible about it) -- look at mocha
+  var path = require('path'),
+      cwd = process.cwd();
+function resolveFiles(params) {
+  // Localize params
+  var paths = params.paths,
+      dir = params.dir,
+      namespace = params.namespace;
 
-// If there are no outline paths, attempt to locate them in dir
-if (!outlinePaths) {
-  // Look for {{dir}}/*_outline* (e.g. test/doubleshot_outline.json)
-  outlineFiles = glob.sync(dir + '/*_outline.{js,json,node}');
+  // Begin searching for files
+  var files = [];
 
-  // If none is found, look for {{dir}}/outline/**/* (e.g. test/outline/doubleshot.json)
-  if (outlineFiles.length === 0) {
-    outlineFiles = glob.sync(dir + '/outline/**/*.{js,json,node}');
+  // If there are no outline paths, attempt to locate them in dir
+  if (!paths) {
+    // Look for {{dir}}/*_outline* (e.g. test/doubleshot_outline.json)
+    files = glob.sync(dir + '/*_' + namespace + '.{js,json,node}');
+
+    // If none is found, look for {{dir}}/outline/**/* (e.g. test/outline/doubleshot.json)
+    if (files.length === 0) {
+      files = glob.sync(dir + '/' + namespace + '/**/*.{js,json,node}');
+    }
+  } else {
+  // Otherwise, resolve paths via glob
+    files = glob.sync(paths);
   }
-} else {
-// Otherwise, resolve paths via glob
-  outlineFiles = glob.sync(outlinePaths);
+
+  // If there are files, expand their paths
+  if (files.length) {
+    files = files.map(function getProperPath (filepath) {
+      return path.join(cwd, filepath);
+    });
+  }
+
+  // Return files
+  return files;
 }
+
+// Resolve outlineFiles and contentFiles
+var outlineFiles = resolveFiles({
+      paths: outlinePaths,
+      dir: testDir,
+      namespace: 'outline'
+    }),
+    contentFiles = resolveFiles({
+      paths: contentPaths,
+      dir: testDir,
+      namespace: 'content'
+    });
 
 // If there are no outline files, notify the user and quit -- I can't work in this environment ;_;
 if (outlineFiles.length === 0) {
@@ -40,20 +70,20 @@ if (outlineFiles.length === 0) {
   process.exit(1);
 }
 
-// Map outlineFiles through process.cwd() for proper require resolution
-var path = require('path'),
-    cwd = process.cwd();
-outlineFiles = outlineFiles.map(function getProperPath (filepath) {
-  return path.join(cwd, filepath);
-});
+// Similarly notify for contentFiles
+if (contentFiles.length === 0) {
+  console.error('No doubleshot content files could be found.');
+  console.error('Please place them as `test/{{name}}_content.js`, `test/content/{{name}}.js` or specify them via `--content`.');
+  process.exit(1);
+}
 
 // TODO: Probably want nopt for this due to `remain` functionality
 // TODO: CLI should read `doubleshot`
 // TODO: CLI should read `doubleshot test`
 // TODO: CLI should read `doubleshot --outline test/outline --content test/content`
+
 // Load in files
-var contentFiles = [__dirname + '/../test/doubleshot_content'],
-    outlineArr = outlineFiles.map(require),
+var outlineArr = outlineFiles.map(require),
     contentArr = contentFiles.map(require);
 
 // Call doubleshot
