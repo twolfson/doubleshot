@@ -4,21 +4,13 @@
 // Invoke via `doubleshot test`
 // Invoke via `doubleshot --outline test/outline --content test/content`
 
-// Load in commander for parsing
-var program = require('commander'),
-    pkg = require('../package');
-
-// Silence errors
-program.unknownOption = function () {};
-
 // Parse parameters
-program
-  .version(pkg.version)
-  .option('--outline [path]', 'Path (minimatch compatible) to outline files')
-  .option('--content [path]', 'Path (minimatch compatible) to content files')
-  .parse(process.argv);
-
-console.log(program);
+var nopt = require('nopt'),
+    knownOpts = {
+      'outline': String,
+      'content': String
+    },
+    parsed = nopt(knownOpts);
 
 // Localize and fallback info from dir
 var glob = require('glob'),
@@ -90,11 +82,27 @@ if (contentFiles.length === 0) {
 }
 
 // Grab the first two args and append the remaining ones
-// DEV: First two args are always `node [...]/doubleshot`
+// DEV: First two args are always `node [...]/doubleshot
 var argv = process.argv.slice(0, 2);
-argv.push.apply(argv, parsed.argv.remain);
+
+// Walk over the remaining args
+var lastWasOurFlag;
+process.argv.slice(2).forEach(function (arg) {
+  // If the argument is `--outline`/`-outline`/`--content`/`-content`, then skip it
+  if (arg.match(/^\-?\-(outline|content)$/)) {
+    // Mark that the last was ours
+    lastWasOurFlag = true;
+  } else if (lastWasOurFlag) {
+  // Otherwise, if the last flag was ours, skip this one and turn off our flag
+    lastWasOurFlag = false;
+  } else {
+  // Otherwise, save this argument
+    argv.push(arg);
+  }
+});
 
 console.log(argv);
+
 
 // Override process.argv and process.argc so mocha behaves
 process.argv = argv;
