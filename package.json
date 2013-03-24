@@ -32,7 +32,9 @@
     "test": "./bin/doubleshot"
   },
   "dependencies": {
-    "mocha": "1.8.2"
+    "mocha": "1.8.2",
+    "object-fusion": "~0.1.0",
+    "underscore": "~1.4.4"
   },
   "devDependencies": {
     "grunt": "~0.3.17"
