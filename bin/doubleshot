@@ -26,13 +26,13 @@ if (argv.help) {
 
 // Localize and fallback info from dir
 var glob = require('glob'),
-    testDir = process.argv[2] || '',
+    testDir = process.argv[2],
     outlinePaths = argv.outline,
     contentPaths = argv.content;
 
 
-// If the testDir is an option, fallback to `test`
-if (testDir.match(/^\-/) || testDir === '') {
+// If there is no testDir or it is an option, fallback to `test`
+if (!testDir || testDir.match(/^\-/)) {
   testDir = 'test';
 }
 
