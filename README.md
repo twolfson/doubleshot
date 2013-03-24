@@ -77,6 +77,46 @@ describe('One', function () {
 ```
 
 ### Advanced (aliasing and expansion)
+```js
+// outline.json
+{
+  // Spanish for: One plus two
+  "Uno mas dos": {
+    // Spanish for: is equal to three
+    "son tres": true
+  }
+}
+
+// content.js
+{
+  'Uno mas dos': ['Uno', 'mas dos'],
+  'Uno': 'One',
+  'One': function () {
+    this.sum = 1;
+  },
+  'mas done': 'plus two',
+  'plus two': function () {
+    this.sum += 2;
+  },
+  'son tres': 'is equal to three',
+  'is equal to three': function () {
+    assert.strictEqual(this.sum, 3);
+  }
+}
+
+// Runs test as
+describe('Uno mas dos', function () {
+  before(function () {
+    // These are contained inside functions but have the same effect
+    this.sum = 1;
+    this.sum += 2;
+  });
+
+  it('son tres', function () {
+    assert.strictEqual(this.sum, 3);
+  });
+});
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.
