@@ -1,5 +1,45 @@
 #!/usr/bin/env node
 
+// Parse parameters
+var nopt = require('nopt'),
+    knownOpts = {
+      'outline': String,
+      'content': String
+    },
+    parsed = nopt(knownOpts);
+
+// Localize and fallback info from dir
+var glob = require('glob'),
+    dir = parsed.argv.remain[0] || 'test',
+    outlinePaths = parsed.outline,
+    contentPaths = parsed.content;
+
+// Begin resolving outlineFiles
+var outlineFiles = [];
+
+// TODO: Support multiple extensions (and be extensible about it) -- look at mocha
+
+// If there are no outline paths, attempt to locate them in dir
+if (!outlinePaths) {
+  // Look for {{dir}}/*_outline* (e.g. test/doubleshot_outline.json)
+  outlineFiles = glob.sync(dir + '/*_outline.{js,json,node}');
+
+  // If none is found, look for {{dir}}/outline/**/* (e.g. test/outline/doubleshot.json)
+  if (outlineFiles.length === 0) {
+    outlineFiles = glob.sync(dir + '/outline/**/*.{js,json,node}');
+  }
+} else {
+// Otherwise, resolve paths via glob
+  outlineFiles = glob.sync(outlinePaths);
+}
+
+// If there are no outline files, notify the user and quit -- I can't work in this environment ;_;
+if (outlineFiles.length === 0) {
+  console.error('No doubleshot outline files could be found.');
+  console.error('Please place them as `test/{{name}}_outline.json`, `test/outline/{{name}}.json` or specify them via `--outline`.');
+  process.exit(1);
+}
+
 // TODO: Probably want nopt for this due to `remain` functionality
 // TODO: CLI should read `doubleshot`
 // TODO: CLI should read `doubleshot test`

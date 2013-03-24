@@ -34,7 +34,9 @@
   "dependencies": {
     "mocha": "1.8.2",
     "object-fusion": "~0.1.0",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "nopt": "~2.1.1",
+    "glob": "~3.1.21"
   },
   "devDependencies": {
     "grunt": "~0.3.17"
