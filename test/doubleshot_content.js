@@ -18,6 +18,8 @@ module.exports = {
     this.isolationA = true;
     this.sum = 1;
   },
+  // Interesting... this is failing
+  // Try a proof of concept with mocha to see if this is normal behavior
   'Another isolated test': function () {
   },
   'is isolated from its peers': function () {
