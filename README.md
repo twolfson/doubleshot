@@ -1,6 +1,6 @@
 # doubleshot
 
-Separate BDD outline from content but run it in Mocha.
+Run separated BDD outlines and content on Mocha.
 
 Doubleshot serves the single purpose of separating BDD outlines from their implementation. The benefits I will highlight are chaining and re-use of tests.
 
@@ -28,9 +28,7 @@ _(Coming soon)_
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.
 
-## Release History
-_(Nothing yet)_
-
 ## License
 Copyright (c) 2013 Todd Wolfson
+
 Licensed under the MIT license.

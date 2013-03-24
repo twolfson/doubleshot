@@ -63,7 +63,7 @@ var outlineFiles = resolveFiles({
       namespace: 'content'
     });
 
-// If there are no outline files, notify the user and quit -- I can't work in this environment ;_;
+// If there are no outline files, notify the user and quit
 if (outlineFiles.length === 0) {
   console.error('No doubleshot outline files could be found.');
   console.error('Please place them as `test/{{name}}_outline.json`, `test/outline/{{name}}.json` or specify them via `--outline`.');
