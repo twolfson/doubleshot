@@ -29,14 +29,14 @@
     "node": ">= 0.6.0"
   },
   "scripts": {
-    "test": "./bin/doubleshot && ./bin/doubleshot test && ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan"
+    "test": "./bin/doubleshot && ./bin/doubleshot --reporter nyan && ./bin/doubleshot test && ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan"
   },
   "dependencies": {
     "mocha": "1.8.2",
     "object-fusion": "~0.1.1",
     "underscore": "~1.4.4",
-    "nopt": "~2.1.1",
-    "glob": "~3.1.21"
+    "glob": "~3.1.21",
+    "optimist": "~0.3.5"
   },
   "devDependencies": {
     "grunt": "~0.3.17"

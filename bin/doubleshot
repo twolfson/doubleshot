@@ -10,18 +10,30 @@
 // Invoke via `doubleshot --outline test/outline --content test/content`
 
 // Parse parameters
-var nopt = require('nopt'),
-    knownOpts = {
-      'outline': String,
-      'content': String
-    },
-    parsed = nopt(knownOpts);
+var optimist = require('optimist'),
+    options = optimist
+      .usage('Run separated BDD outlines and content on Mocha.\nUsage: $0 [test dir] [--options]')
+      .describe('outline', 'Path to outline files (minimatch accepted)')
+      .describe('content', 'Path to content files (minimatch accepted)')
+      .describe('help', 'You are reading it')
+      ['boolean']('help'),
+    argv = options.argv;
+
+// If there is request for help, show it
+if (argv.help) {
+  options.showHelp();
+}
 
 // Localize and fallback info from dir
 var glob = require('glob'),
-    testDir = parsed.argv.remain[0] || 'test',
-    outlinePaths = parsed.outline,
-    contentPaths = parsed.content;
+    testDir = process.argv[2] || '',
+    outlinePaths = argv.outline,
+    contentPaths = argv.content;
+
+// If the testDir is an option, fallback to `test`
+if (testDir.match(/^\-/)) {
+  testDir = 'test';
+}
 
 // Helper function to filter for existing file paths
 var path = require('path'),
