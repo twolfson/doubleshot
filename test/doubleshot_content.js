@@ -25,18 +25,21 @@ module.exports = {
   },
   'A test using async expansion': ['Async', 'expansion'],
   'Async': function (done) {
+    console.log('hey');
     setTimeout(function () {
       this.asyncA = true;
       done();
     }, 1);
   },
   'expansion': function (done) {
+    console.log('hey2');
     setTimeout(function () {
       this.asyncB = this.asyncA;
       done();
     }, 1);
   },
   'still completes': function () {
+    console.log(this);
     assert.strictEqual(this.asyncB, true);
   }
 };
