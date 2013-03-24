@@ -40,14 +40,19 @@ if (outlineFiles.length === 0) {
   process.exit(1);
 }
 
+// Map outlineFiles through process.cwd() for proper require resolution
+var path = require('path'),
+    cwd = process.cwd();
+outlineFiles = outlineFiles.map(function getProperPath (filepath) {
+  return path.join(cwd, filepath);
+});
+
 // TODO: Probably want nopt for this due to `remain` functionality
 // TODO: CLI should read `doubleshot`
 // TODO: CLI should read `doubleshot test`
 // TODO: CLI should read `doubleshot --outline test/outline --content test/content`
-// TODO: Load in files
-// TODO: Use glob against pattern passed in
-var outlineFiles = [__dirname + '/../test/doubleshot_outline'],
-    contentFiles = [__dirname + '/../test/doubleshot_content'],
+// Load in files
+var contentFiles = [__dirname + '/../test/doubleshot_content'],
     outlineArr = outlineFiles.map(require),
     contentArr = contentFiles.map(require);
 
