@@ -47,7 +47,33 @@ There is an underlying library, however, it currently cannot be used in isolatio
 ## Examples
 ### Basic
 ```js
-TODO: Grab from object-fusion
+// outline.json
+{
+  "One": {
+    "is equal to one": true
+  }
+};
+
+// content.js
+{
+  'One': function () {
+    this.one = 1;
+  },
+  'is equal to one': function () {
+    assert.strictEqual(this.one, 1);
+  }
+}
+
+// Runs test as
+describe('One', function () {
+  before(function () {
+    this.one = 1;
+  });
+
+  it('is equal to one', function () {
+    assert.strictEqual(this.one, 1);
+  });
+});
 ```
 
 ### Advanced (aliasing and expansion)
