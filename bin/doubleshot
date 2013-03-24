@@ -88,6 +88,8 @@ var outlineFiles = resolveFiles({
 if (outlineFiles.length === 0) {
   console.error('No doubleshot outline files could be found.');
   console.error('Please place them as `test/{{name}}_outline.json`, `test/outline/{{name}}.json` or specify them via `--outline`.');
+  console.log('');
+  options.showHelp();
   process.exit(1);
 }
 
@@ -95,6 +97,8 @@ if (outlineFiles.length === 0) {
 if (contentFiles.length === 0) {
   console.error('No doubleshot content files could be found.');
   console.error('Please place them as `test/{{name}}_content.js`, `test/content/{{name}}.js` or specify them via `--content`.');
+  console.log('');
+  options.showHelp();
   process.exit(1);
 }
 
