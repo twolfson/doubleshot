@@ -4,13 +4,21 @@
 // Invoke via `doubleshot test`
 // Invoke via `doubleshot --outline test/outline --content test/content`
 
+// Load in commander for parsing
+var program = require('commander'),
+    pkg = require('../package');
+
+// Silence errors
+program.unknownOption = function () {};
+
 // Parse parameters
-var nopt = require('nopt'),
-    knownOpts = {
-      'outline': String,
-      'content': String
-    },
-    parsed = nopt(knownOpts);
+program
+  .version(pkg.version)
+  .option('--outline [path]', 'Path (minimatch compatible) to outline files')
+  .option('--content [path]', 'Path (minimatch compatible) to content files')
+  .parse(process.argv);
+
+console.log(program);
 
 // Localize and fallback info from dir
 var glob = require('glob'),
