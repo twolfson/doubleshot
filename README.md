@@ -17,6 +17,34 @@ doubleshot is a global module and is run on the command line
 ```shell
 npm install -g doubleshot # Installs doubleshot globally
 doubleshot # Runs content/outline files in test folder
+
+// test/outline.json
+{
+  "One": {
+    "is equal to one": true
+  }
+};
+
+// test/content.js
+{
+  'One': function () {
+    this.one = 1;
+  },
+  'is equal to one': function () {
+    assert.strictEqual(this.one, 1);
+  }
+}
+
+// Runs test as
+describe('One', function () {
+  before(function () {
+    this.one = 1;
+  });
+
+  it('is equal to one', function () {
+    assert.strictEqual(this.one, 1);
+  });
+});
 ```
 
 ## Documentation
@@ -45,38 +73,10 @@ Options:
 There is an underlying library, however, it currently cannot be used in isolation.
 
 ## Examples
-### Basic
-```js
-// outline.json
-{
-  "One": {
-    "is equal to one": true
-  }
-};
+A basic example can be found in the [getting-started][getting-started] section. Below is an advanced example using aliasing and expansion.
 
-// content.js
-{
-  'One': function () {
-    this.one = 1;
-  },
-  'is equal to one': function () {
-    assert.strictEqual(this.one, 1);
-  }
-}
+[getting-started]: #getting-started
 
-// Runs test as
-describe('One', function () {
-  before(function () {
-    this.one = 1;
-  });
-
-  it('is equal to one', function () {
-    assert.strictEqual(this.one, 1);
-  });
-});
-```
-
-### Advanced (aliasing and expansion)
 ```js
 // outline.json
 {
