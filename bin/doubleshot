@@ -101,9 +101,6 @@ process.argv.slice(2).forEach(function (arg) {
   }
 });
 
-console.log(argv);
-
-
 // Override process.argv and process.argc so mocha behaves
 process.argv = argv;
 process.argc = argv.length;
