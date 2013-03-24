@@ -26,15 +26,17 @@ module.exports = {
   'A test using async expansion': ['Async', 'expansion'],
   'Async': function (done) {
     console.log('hey');
+    var that = this;
     setTimeout(function () {
-      this.asyncA = true;
+      that.asyncA = true;
       done();
     }, 1);
   },
   'expansion': function (done) {
     console.log('hey2');
+    var that = this;
     setTimeout(function () {
-      this.asyncB = this.asyncA;
+      that.asyncB = that.asyncA;
       done();
     }, 1);
   },
