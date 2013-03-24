@@ -13,5 +13,14 @@ module.exports = {
   },
   'minus two': function () {
     this.sum -= 2;
+  },
+  'An isolated test': function () {
+    this.isolationA = true;
+    this.sum = 1;
+  },
+  'Another isolated test': function () {
+  },
+  'is isolated from its peers': function () {
+    assert.notEqual(this.isolationA, true);
   }
 };
