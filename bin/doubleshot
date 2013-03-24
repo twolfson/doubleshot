@@ -1,2 +1,19 @@
 #!/usr/bin/env node
-require('../lib/doubleshot');
+
+// TODO: Probably want nopt for this due to `remain` functionality
+// TODO: CLI should read `doubleshot`
+// TODO: CLI should read `doubleshot test`
+// TODO: CLI should read `doubleshot --outline test/outline --content test/content`
+// TODO: Load in files
+// TODO: Use glob against pattern passed in
+var outlineFiles = [__dirname + '/../test/doubleshot_outline'],
+    contentFiles = [__dirname + '/../test/doubleshot_content'],
+    outlineArr = outlineFiles.map(require),
+    contentArr = contentFiles.map(require);
+
+// Call doubleshot
+var doubleshot = require('../lib/doubleshot');
+doubleshot({
+  outlines: outlineArr,
+  content: contentArr
+});
