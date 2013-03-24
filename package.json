@@ -29,7 +29,7 @@
     "node": ">= 0.6.0"
   },
   "scripts": {
-    "test": "./bin/doubleshot && ./bin/doubleshot test &&  ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js"
+    "test": "./bin/doubleshot && ./bin/doubleshot test && ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js"
   },
   "dependencies": {
     "mocha": "1.8.2",

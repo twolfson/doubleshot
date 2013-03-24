@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// Invoke via `doubleshot`
+// Invoke via `doubleshot test`
+// Invoke via `doubleshot --outline test/outline --content test/content`
+
 // Parse parameters
 var nopt = require('nopt'),
     knownOpts = {
@@ -77,10 +81,16 @@ if (contentFiles.length === 0) {
   process.exit(1);
 }
 
-// TODO: Probably want nopt for this due to `remain` functionality
-// TODO: CLI should read `doubleshot`
-// TODO: CLI should read `doubleshot test`
-// TODO: CLI should read `doubleshot --outline test/outline --content test/content`
+// Grab the first two args and append the remaining ones
+// DEV: First two args are always `node [...]/doubleshot`
+var argv = process.argv.slice(0, 2);
+argv.push.apply(argv, parsed.argv.remain);
+
+console.log(argv);
+
+// Override process.argv and process.argc so mocha behaves
+process.argv = argv;
+process.argc = argv.length;
 
 // Load in files
 var outlineArr = outlineFiles.map(require),
