@@ -20,9 +20,10 @@ module.exports = {
   'minus two': function () {
     this.sum3 -= 2;
   },
-  'can run properly': function () {
-    assert.strictEqual(this.sum3, 1);
-  },
+  'can run properly': 'yes',
+  // 'can run properly': function () {
+  //   assert.strictEqual(this.sum3, 1);
+  // },
   'A test using async expansion': ['Async', 'expansion'],
   'Async': function (done) {
     var that = this;
@@ -31,13 +32,13 @@ module.exports = {
       done();
     }, 1);
   },
-  // 'expansion': function (done) {
-  //   var that = this;
-  //   setTimeout(function () {
-  //     that.asyncB = that.asyncA;
-  //     done();
-  //   }, 1);
-  // },
+  'expansion': function (done) {
+    var that = this;
+    setTimeout(function () {
+      that.asyncB = that.asyncA;
+      done();
+    }, 1);
+  },
   'still completes': function () {
     assert.strictEqual(this.asyncB, true);
   }
