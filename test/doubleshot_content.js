@@ -31,13 +31,13 @@ module.exports = {
       done();
     }, 1);
   },
-  'expansion': function (done) {
-    var that = this;
-    setTimeout(function () {
-      that.asyncB = that.asyncA;
-      done();
-    }, 1);
-  },
+  // 'expansion': function (done) {
+  //   var that = this;
+  //   setTimeout(function () {
+  //     that.asyncB = that.asyncA;
+  //     done();
+  //   }, 1);
+  // },
   'still completes': function () {
     assert.strictEqual(this.asyncB, true);
   }
