@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "mocha": "1.8.2",
-    "object-fusion": "~0.1.1",
+    "object-fusion": "~0.2.0",
     "underscore": "~1.4.4",
     "glob": "~3.1.21",
     "optimist": "~0.3.5",
