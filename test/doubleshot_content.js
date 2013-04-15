@@ -20,11 +20,12 @@ module.exports = {
   'minus two': function () {
     this.sum3 -= 2;
   },
-  'can': 'yes',
-  'can run properly': 'yes',
-  // 'can run properly': function () {
-  //   assert.strictEqual(this.sum3, 1);
-  // },
+  // TODO: Write actual tests against this
+  // 'can': 'yes',
+  // 'can run properly': 'yes',
+  'can run properly': function () {
+    assert.strictEqual(this.sum3, 1);
+  },
   'A test using async expansion': ['Async', 'expansion'],
   'Async': function (done) {
     var that = this;
