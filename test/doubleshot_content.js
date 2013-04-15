@@ -20,6 +20,7 @@ module.exports = {
   'minus two': function () {
     this.sum3 -= 2;
   },
+  // 'can': 'yes',
   'can run properly': 'yes',
   // 'can run properly': function () {
   //   assert.strictEqual(this.sum3, 1);
