@@ -16,18 +16,8 @@ program
   .option('-O, --outline <pattern>', 'Path to outline files (minimatch accepted)')
   .option('-N, --content <pattern>', 'Path to content files (minimatch accepted)')
 
-    // options = optimist
-    //   .usage('Run separated BDD outlines and content on Mocha.\nUsage: $0 ')
-    //   .describe('outline', 'Path to outline files (minimatch accepted)')
-    //   .describe('content', 'Path to content files (minimatch accepted)')
-    //   .describe('help', 'You are reading it')
-    //   ['boolean']('help'),
-    // argv = options.argv;
-
-// // If there is request for help, show it
-// if (argv.help) {
-//   options.showHelp();
-// }
+// Load in _doubleshot
+require('./_doubleshot');
 
 // // Localize and fallback info from dir
 // var glob = require('glob'),

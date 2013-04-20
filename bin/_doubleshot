@@ -23,6 +23,7 @@ var program = require('commander')
   , cwd = process.cwd()
   , mocha = new Mocha;
 
+
 /**
  * Save timer references to avoid Sinon interfering (see GH-237).
  */
@@ -58,7 +59,7 @@ var images = {
 
 program
   .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)
-  .usage('[debug] [options] [files]')
+  // .usage('[debug] [options] [files]')
   .option('-r, --require <name>', 'require the given module')
   .option('-R, --reporter <name>', 'specify the reporter to use', 'dot')
   .option('-u, --ui <name>', 'specify user-interface (bdd|tdd|exports)', 'bdd')
