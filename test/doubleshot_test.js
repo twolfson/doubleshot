@@ -1,6 +1,7 @@
 // Load in child_process and chai
 var cp = require('child_process'),
     exec = cp.exec,
+    async = require('async'),
     chai = require('chai'),
     expect = chai.expect;
 
@@ -18,22 +19,30 @@ var outline = {
 var doubleshot = __dirname + '/../bin/doubleshot';
 describe('doubleshot', function () {
   it('reads the `test` directory implicitly', function (done) {
-    // Run doubleshot implicitly
-    exec(doubleshot, function handleDblImplicit (err, stdout, stderr) {
-      // If there is an error or stderr, callback with it
-      err = err || stderr;
-      if (err) {
-        done(err);
-      } else {
-      // Otherwise, assert the test suite ran successfully
+    async.waterfall([
+      // Run doubleshot implicitly
+      function runDblImplicitly (cb) {
+        exec(doubleshot, cb);
+      },
+      // Handle stderr throwbacks
+      function handleDblImplicit (stdout, stderr, cb) {
+        // If there were any errors, callback with them
+        if (stderr) {
+          var err = new Error(stderr);
+          cb(err);
+        } else {
+        // Otherwise, callback with stdout
+          cb(null, stdout);
+        }
+      },
+      // Assert the test suite ran successfully
+      function assertDblImplicit (stdout, cb) {
         expect(stdout).to.contain('complete');
         expect(stdout).to.not.contain('pending');
         expect(stdout).to.not.contain('failed');
-
-        // and callback
-        done();
+        cb();
       }
-    });
+    ], done);
   });
 
   it('allows for usage of `mocha` options', function (done) {
