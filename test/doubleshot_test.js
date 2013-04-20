@@ -54,6 +54,7 @@ function assertNyanSuccess(stdout, cb) {
 }
 
 // Content
+// Basic tests
 var doubleshot = __dirname + '/../bin/doubleshot';
 describe('doubleshot', function () {
   it('reads the `test` directory implicitly', function (done) {
@@ -109,5 +110,35 @@ describe('doubleshot', function () {
       // Assert the test suite ran successfully
       assertNyanSuccess
     ], done);
+  });
+});
+
+describe('doubleshot', function () {
+  it('warns user when keys are unused', function (done) {
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblUnusedKeys (cb) {
+        var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      function assertDblUnusedKeys (stdout, cb) {
+        // Assert normal test items
+        expect(stdout).to.contain('complete');
+        expect(stdout).to.not.contain('pending');
+        expect(stdout).to.not.contain('failed');
+
+        // Assert there was a warning
+        console.log(stdout);
+        cb();
+      }
+    ], done);
+
+  });
+
+  it('warns user when keys are not found', function () {
+
   });
 });
