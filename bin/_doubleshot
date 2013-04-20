@@ -13,15 +13,15 @@ var program = require('commander')
   , fs = require('fs')
   , resolve = path.resolve
   , exists = fs.existsSync || path.existsSync
-  , Mocha = require('../')
-  , utils = Mocha.utils
-  , reporters = Mocha.reporters
-  , interfaces = Mocha.interfaces
+  , Doubleshot = require('../')
+  , utils = Doubleshot.utils
+  , reporters = Doubleshot.reporters
+  , interfaces = Doubleshot.interfaces
   , Base = reporters.Base
   , join = path.join
   , basename = path.basename
   , cwd = process.cwd()
-  , mocha = new Mocha;
+  , doubleshot = new Doubleshot;
 
 
 /**
@@ -82,24 +82,26 @@ program
   .option('--reporters', 'display available reporters')
   .option('--compilers <ext>:<module>,...', 'use the given module(s) to compile files', list, [])
 
-program.name = 'mocha';
+program.name = 'doubleshot';
 
-// init command
+// TODO: Add doubleshot support for this
 
-program
-  .command('init <path>')
-  .description('initialize a client-side mocha setup at <path>')
-  .action(function(path){
-    var mkdir = require('mkdirp');
-    mkdir.sync(path);
-    var css = fs.readFileSync(join(__dirname, '..', 'mocha.css'));
-    var js = fs.readFileSync(join(__dirname, '..', 'mocha.js'));
-    var tmpl = fs.readFileSync(join(__dirname, '..', 'lib/template.html'));
-    fs.writeFileSync(join(path, 'mocha.css'), css);
-    fs.writeFileSync(join(path, 'mocha.js'), js);
-    fs.writeFileSync(join(path, 'tests.html'), tmpl);
-    process.exit(0);
-  });
+// // init command
+
+// program
+//   .command('init <path>')
+//   .description('initialize a client-side mocha setup at <path>')
+//   .action(function(path){
+//     var mkdir = require('mkdirp');
+//     mkdir.sync(path);
+//     var css = fs.readFileSync(join(__dirname, '..', 'mocha.css'));
+//     var js = fs.readFileSync(join(__dirname, '..', 'mocha.js'));
+//     var tmpl = fs.readFileSync(join(__dirname, '..', 'lib/template.html'));
+//     fs.writeFileSync(join(path, 'mocha.css'), css);
+//     fs.writeFileSync(join(path, 'mocha.js'), js);
+//     fs.writeFileSync(join(path, 'tests.html'), tmpl);
+//     process.exit(0);
+//   });
 
 // --globals
 
@@ -155,10 +157,12 @@ program.on('require', function(mod){
   require(mod);
 });
 
-// mocha.opts support
+// TODO: Document this
+
+// doubleshot.opts support
 
 try {
-  var opts = fs.readFileSync('test/mocha.opts', 'utf8')
+  var opts = fs.readFileSync('test/doubleshot.opts', 'utf8')
     .trim()
     .split(/\s+/);
 
@@ -179,11 +183,11 @@ Error.stackTraceLimit = Infinity; // TODO: config
 
 // reporter
 
-mocha.reporter(program.reporter);
+doubleshot.reporter(program.reporter);
 
 // interface
 
-mocha.ui(program.ui);
+doubleshot.ui(program.ui);
 
 // load reporter
 
@@ -210,39 +214,39 @@ if (~process.argv.indexOf('--colors') ||
 
 // --slow <ms>
 
-if (program.slow) mocha.suite.slow(program.slow);
+if (program.slow) doubleshot.suite.slow(program.slow);
 
 // --timeout
 
-if (program.timeout) mocha.suite.timeout(program.timeout);
+if (program.timeout) doubleshot.suite.timeout(program.timeout);
 
 // --bail
 
-mocha.suite.bail(program.bail);
+doubleshot.suite.bail(program.bail);
 
 // --grep
 
-if (program.grep) mocha.grep(new RegExp(program.grep));
+if (program.grep) doubleshot.grep(new RegExp(program.grep));
 
 // --invert
 
-if (program.invert) mocha.invert();
+if (program.invert) doubleshot.invert();
 
 // --ignore-leaks
 
-if (program.ignoreLeaks) mocha.ignoreLeaks();
+if (program.ignoreLeaks) doubleshot.ignoreLeaks();
 
 // --growl
 
-if (program.growl) mocha.growl();
+if (program.growl) doubleshot.growl();
 
 // --async-only
 
-if (program.asyncOnly) mocha.asyncOnly();
+if (program.asyncOnly) doubleshot.asyncOnly();
 
 // --globals
 
-mocha.globals(globals);
+doubleshot.globals(globals);
 
 // custom compiler support
 
@@ -300,8 +304,8 @@ if (program.watch) {
   var watchFiles = utils.files(cwd);
 
   function loadAndRun() {
-    mocha.files = files;
-    mocha.run(function(){
+    doubleshot.files = files;
+    doubleshot.run(function(){
       play(frames);
     });
   }
@@ -317,8 +321,8 @@ if (program.watch) {
   utils.watch(watchFiles, function(){
     purge();
     stop()
-    mocha.suite = mocha.suite.clone();
-    mocha.ui(program.ui);
+    doubleshot.suite = doubleshot.suite.clone();
+    doubleshot.ui(program.ui);
     loadAndRun();
   });
 
@@ -327,8 +331,8 @@ if (program.watch) {
 
 // load
 
-mocha.files = files;
-mocha.run(process.exit);
+doubleshot.files = files;
+doubleshot.run(process.exit);
 
 // enable growl notifications
 
@@ -339,10 +343,10 @@ function growl(runner, reporter) {
     var stats = reporter.stats;
     if (stats.failures) {
       var msg = stats.failures + ' of ' + runner.total + ' tests failed';
-      notify(msg, { name: 'mocha', title: 'Failed', image: images.fail });
+      notify(msg, { name: 'doubleshot', title: 'Failed', image: images.fail });
     } else {
       notify(stats.passes + ' tests passed in ' + stats.duration + 'ms', {
-          name: 'mocha'
+          name: 'doubleshot'
         , title: 'Passed'
         , image: images.pass
       });
