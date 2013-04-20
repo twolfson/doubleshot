@@ -130,7 +130,19 @@ describe('doubleshot', function () {
     });
   });
 
-  it('warns user when keys are not found', function () {
+  it('warns user when keys are not found', function (done) {
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' --content test/test_files/keys_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
+    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
 
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('equals two');
+      expect(stderr).to.match(/not .* found/);
+
+      // Callback
+      done();
+    });
   });
 });
