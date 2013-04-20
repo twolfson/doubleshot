@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// Repurposed mocha/bin/_mocha
+// https://github.com/visionmedia/mocha/blob/6324d1c900b48377cf167f17b96855cc98bd7a6b/bin/_mocha
+
 /**
  * Module dependencies.
  */
