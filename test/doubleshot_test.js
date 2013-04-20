@@ -115,27 +115,19 @@ describe('doubleshot', function () {
 
 describe('doubleshot', function () {
   it('warns user when keys are unused', function (done) {
-    async.waterfall([
-      // Run doubleshot with mocha options
-      function runDblUnusedKeys (cb) {
-        var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
-        exec(cmd, cb);
-      },
-      // Clean up and errors from stderr
-      cleanStdErr,
-      // Assert the test suite ran successfully
-      function assertDblUnusedKeys (stdout, cb) {
-        // Assert normal test items
-        expect(stdout).to.contain('complete');
-        expect(stdout).to.not.contain('pending');
-        expect(stdout).to.not.contain('failed');
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
+    exec(cmd, function handleDblUnusedKeys (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
 
-        // Assert there was a warning
-        console.log(stdout);
-        cb();
-      }
-    ], done);
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('equals three');
+      expect(stderr).to.contain('not used');
 
+      // Callback
+      done();
+    });
   });
 
   it('warns user when keys are not found', function () {
