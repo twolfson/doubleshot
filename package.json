@@ -36,8 +36,8 @@
     "object-fusion": "~0.2.0",
     "underscore": "~1.4.4",
     "glob": "~3.1.21",
-    "optimist": "~0.3.5",
-    "async": "~0.2.6"
+    "async": "~0.2.6",
+    "commander": "~1.1.1"
   },
   "devDependencies": {
     "grunt": "~0.3.17",
