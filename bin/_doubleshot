@@ -21,7 +21,9 @@ var program = require('commander')
   , join = path.join
   , basename = path.basename
   , cwd = process.cwd()
-  , doubleshot = new Doubleshot;
+  , doubleshot = new Doubleshot
+  , mochaFilepath = require.resolve('mocha')
+  , mochaPath = path.dirname(mochaFilepath);
 
 
 /**
@@ -192,7 +194,7 @@ doubleshot.ui(program.ui);
 // load reporter
 
 try {
-  Reporter = require('../lib/reporters/' + program.reporter);
+  Reporter = require(mochaPath + '/lib/reporters/' + program.reporter);
 } catch (err) {
   try {
     Reporter = require(program.reporter);
