@@ -29,7 +29,7 @@
     "node": ">= 0.6.0"
   },
   "scripts": {
-    "test": "./bin/doubleshot && ./bin/doubleshot --reporter nyan && ./bin/doubleshot test && ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan"
+    "test": "mocha test/doubleshot_test.js"
   },
   "dependencies": {
     "mocha": "1.8.2",
@@ -40,7 +40,8 @@
     "async": "~0.2.6"
   },
   "devDependencies": {
-    "grunt": "~0.3.17"
+    "grunt": "~0.3.17",
+    "chai": "~1.5.0"
   },
   "keywords": [
     "bdd",
