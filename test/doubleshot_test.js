@@ -11,7 +11,7 @@ var outline = {
     'reads the `test` directory implicitly': true,
     'allows for usage of `mocha` options': true,
     'allows for explicit directory specification': true,
-    'allows for explicity file (and pattern) matching': true
+    'allows for explicity file (and pattern) matching alongside mocha options': true
   }
 };
 
@@ -32,6 +32,15 @@ function assertDotSuccess(stdout, cb) {
   expect(stdout).to.contain('complete');
   expect(stdout).to.not.contain('pending');
   expect(stdout).to.not.contain('failed');
+  cb();
+}
+
+// Assertions for `nyan` reporter
+function assertNyanSuccess(stdout, cb) {
+  expect(stdout).to.contain('( ^ .^)');
+  // '( ^ .^)'; // Success face
+  // '( - .-)'; // Pending face
+  // '( o .o)'; // Fail face
   cb();
 }
 
@@ -61,13 +70,7 @@ describe('doubleshot', function () {
       // Clean up and errors from stderr
       cleanStdErr,
       // Assert the test suite ran successfully
-      function assertDblMochaOptions (stdout, cb) {
-        expect(stdout).to.contain('( ^ .^)');
-        // '( ^ .^)'; // Success face
-        // '( - .-)'; // Pending face
-        // '( o .o)'; // Fail face
-        cb();
-      }
+      assertNyanSuccess
     ], done);
   });
 
@@ -85,9 +88,17 @@ describe('doubleshot', function () {
     ], done);
   });
 
-  // it('b', '');
-  // it('c', function () { throw new Error('=('); });
+  it('allows for explicity file (and pattern) matching alongside mocha options', function (done) {
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblMochaOptions (cb) {
+        var cmd = doubleshot + ' --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertNyanSuccess
+    ], done);
+  });
 });
-
-// ./bin/doubleshot test
-// ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan
