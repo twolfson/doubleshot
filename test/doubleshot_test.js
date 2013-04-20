@@ -35,9 +35,18 @@ describe('doubleshot', function () {
       }
     });
   });
+
+  it('allows for usage of `mocha` options', function (done) {
+    '( ^ .^)'; // Success face
+    // '( - .-)'; // Pending face
+    // '( o .o)'; // Fail face
+    done();
+  });
+
+  it('b', '');
+  // it('c', function () { throw new Error('=('); });
 });
 
-// ./bin/doubleshot
 // ./bin/doubleshot --reporter nyan
 // ./bin/doubleshot test
 // ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan
