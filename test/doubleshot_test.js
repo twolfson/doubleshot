@@ -27,6 +27,14 @@ function cleanStdErr(stdout, stderr, cb) {
   }
 }
 
+// Assertions for `dot` reporter
+function assertDotSuccess(stdout, cb) {
+  expect(stdout).to.contain('complete');
+  expect(stdout).to.not.contain('pending');
+  expect(stdout).to.not.contain('failed');
+  cb();
+}
+
 // Content
 var doubleshot = __dirname + '/../bin/doubleshot';
 describe('doubleshot', function () {
@@ -39,12 +47,7 @@ describe('doubleshot', function () {
       // Clean up and errors from stderr
       cleanStdErr,
       // Assert the test suite ran successfully
-      function assertDblImplicit (stdout, cb) {
-        expect(stdout).to.contain('complete');
-        expect(stdout).to.not.contain('pending');
-        expect(stdout).to.not.contain('failed');
-        cb();
-      }
+      assertDotSuccess
     ], done);
   });
 
@@ -68,10 +71,23 @@ describe('doubleshot', function () {
     ], done);
   });
 
+  it('allows for explicit directory specification', function (done) {
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblMochaOptions (cb) {
+        var cmd = doubleshot + ' test';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
+
   // it('b', '');
   // it('c', function () { throw new Error('=('); });
 });
 
-// ./bin/doubleshot --reporter nyan
 // ./bin/doubleshot test
 // ./bin/doubleshot --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan
