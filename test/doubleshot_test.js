@@ -6,12 +6,21 @@ var cp = require('child_process'),
     expect = chai.expect;
 
 // Outline
-var outline = {
+// Basic tests
+var basicTests = {
   'doubleshot': {
     'reads the `test` directory implicitly': true,
     'allows for usage of `mocha` options': true,
     'allows for explicit directory specification': true,
     'allows for explicity file (and pattern) matching alongside mocha options': true
+  }
+};
+
+// Kitchen sink
+var kitchenSink = {
+  'doubleshot': {
+    'warns user when keys are unused': true,
+    'warns user when keys are not found': true
   }
 };
 
