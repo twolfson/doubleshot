@@ -15,6 +15,18 @@ var outline = {
   }
 };
 
+// Handle stderr throwbacks
+function cleanStdErr(stdout, stderr, cb) {
+  // If there were any errors, callback with them
+  if (stderr) {
+    var err = new Error(stderr);
+    cb(err);
+  } else {
+  // Otherwise, callback with stdout
+    cb(null, stdout);
+  }
+}
+
 // Content
 var doubleshot = __dirname + '/../bin/doubleshot';
 describe('doubleshot', function () {
@@ -24,17 +36,8 @@ describe('doubleshot', function () {
       function runDblImplicitly (cb) {
         exec(doubleshot, cb);
       },
-      // Handle stderr throwbacks
-      function handleDblImplicit (stdout, stderr, cb) {
-        // If there were any errors, callback with them
-        if (stderr) {
-          var err = new Error(stderr);
-          cb(err);
-        } else {
-        // Otherwise, callback with stdout
-          cb(null, stdout);
-        }
-      },
+      // Clean up and errors from stderr
+      cleanStdErr,
       // Assert the test suite ran successfully
       function assertDblImplicit (stdout, cb) {
         expect(stdout).to.contain('complete');
@@ -46,23 +49,23 @@ describe('doubleshot', function () {
   });
 
   it('allows for usage of `mocha` options', function (done) {
-    // Run doubleshot
-    var cmd = doubleshot + ' --reporter nyan';
-    exec(cmd, function handleDblImplicit (err, stdout, stderr) {
-      // If there is an error or stderr, callback with it
-      err = err || stderr;
-      if (err) {
-        done(err);
-      } else {
-      // Otherwise, assert the test suite ran successfully
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblMochaOptions (cb) {
+        var cmd = doubleshot + ' --reporter nyan';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      function assertDblMochaOptions (stdout, cb) {
         expect(stdout).to.contain('( ^ .^)');
         // '( ^ .^)'; // Success face
         // '( - .-)'; // Pending face
         // '( o .o)'; // Fail face
-        done();
+        cb();
       }
-    });
-    done();
+    ], done);
   });
 
   // it('b', '');
