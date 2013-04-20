@@ -53,49 +53,66 @@ var images = {
 
 // options
 
+var options = {
+  '-r, --require <name>': 'require the given module',
+  '-R, --reporter <name>': {
+    value: 'specify the reporter to use',
+    'default': 'dot'
+  },
+  '-u, --ui <name>': {
+    value: 'specify user-interface (bdd|tdd|exports)',
+    'default': 'bdd'
+  },
+  '-g, --grep <pattern>': 'only run tests matching <pattern>',
+  '-i, --invert': 'inverts --grep matches',
+  '-t, --timeout <ms>': 'set test-case timeout in milliseconds [2000]',
+  '-s, --slow <ms>': '"slow" test threshold in milliseconds [75]',
+  '-w, --watch': 'watch files for changes',
+  '-c, --colors': 'force enabling of colors',
+  '-C, --no-colors': 'force disabling of colors',
+  '-G, --growl': 'enable growl notification support',
+  '-d, --debug': "enable node's debugger, synonym for node --debug",
+  '-b, --bail': "bail after first test failure")
+  '-A, --async-only': "force all tests to take a callback (async)",
+  '--recursive': 'include sub directories',
+  '--debug-brk': "enable node's debugger breaking on the first line",
+  '--globals <names>': {
+    value: 'allow the given comma-delimited global [names]',
+    parser: list,
+    'default': []
+  },
+  '--ignore-leaks': 'ignore global variable leaks',
+  '--interfaces': 'display available interfaces',
+  '--reporters': 'display available reporters',
+  '--compilers <ext>:<module>,...': {
+    value: 'use the given module(s) to compile files',
+    parser: list,
+    'default': []
+  }
+};
+
 program
   .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)
   .usage('[debug] [options] [files]')
-  .option('-r, --require <name>', 'require the given module')
-  .option('-R, --reporter <name>', 'specify the reporter to use', 'dot')
-  .option('-u, --ui <name>', 'specify user-interface (bdd|tdd|exports)', 'bdd')
-  .option('-g, --grep <pattern>', 'only run tests matching <pattern>')
-  .option('-i, --invert', 'inverts --grep matches')
-  .option('-t, --timeout <ms>', 'set test-case timeout in milliseconds [2000]')
-  .option('-s, --slow <ms>', '"slow" test threshold in milliseconds [75]')
-  .option('-w, --watch', 'watch files for changes')
-  .option('-c, --colors', 'force enabling of colors')
-  .option('-C, --no-colors', 'force disabling of colors')
-  .option('-G, --growl', 'enable growl notification support')
-  .option('-d, --debug', "enable node's debugger, synonym for node --debug")
-  .option('-b, --bail', "bail after first test failure")
-  .option('-A, --async-only', "force all tests to take a callback (async)")
-  .option('--recursive', 'include sub directories')
-  .option('--debug-brk', "enable node's debugger breaking on the first line")
-  .option('--globals <names>', 'allow the given comma-delimited global [names]', list, [])
-  .option('--ignore-leaks', 'ignore global variable leaks')
-  .option('--interfaces', 'display available interfaces')
-  .option('--reporters', 'display available reporters')
-  .option('--compilers <ext>:<module>,...', 'use the given module(s) to compile files', list, [])
 
 program.name = 'mocha';
 
-// init command
+// // init command
 
-program
-  .command('init <path>')
-  .description('initialize a client-side mocha setup at <path>')
-  .action(function(path){
-    var mkdir = require('mkdirp');
-    mkdir.sync(path);
-    var css = fs.readFileSync(join(__dirname, '..', 'mocha.css'));
-    var js = fs.readFileSync(join(__dirname, '..', 'mocha.js'));
-    var tmpl = fs.readFileSync(join(__dirname, '..', 'lib/template.html'));
-    fs.writeFileSync(join(path, 'mocha.css'), css);
-    fs.writeFileSync(join(path, 'mocha.js'), js);
-    fs.writeFileSync(join(path, 'tests.html'), tmpl);
-    process.exit(0);
-  });
+// program
+//   .command('init <path>')
+//   .description('initialize a client-side mocha setup at <path>')
+//   .action(function(path){
+//     var mkdir = require('mkdirp');
+//     mkdir.sync(path);
+//     var css = fs.readFileSync(join(__dirname, '..', 'mocha.css'));
+//     var js = fs.readFileSync(join(__dirname, '..', 'mocha.js'));
+//     var tmpl = fs.readFileSync(join(__dirname, '..', 'lib/template.html'));
+//     fs.writeFileSync(join(path, 'mocha.css'), css);
+//     fs.writeFileSync(join(path, 'mocha.js'), js);
+//     fs.writeFileSync(join(path, 'tests.html'), tmpl);
+//     process.exit(0);
+//   });
 
 // --globals
 
