@@ -37,13 +37,26 @@ describe('doubleshot', function () {
   });
 
   it('allows for usage of `mocha` options', function (done) {
-    '( ^ .^)'; // Success face
-    // '( - .-)'; // Pending face
-    // '( o .o)'; // Fail face
+    // Run doubleshot
+    var cmd = doubleshot + ' --reporter nyan';
+    exec(cmd, function handleDblImplicit (err, stdout, stderr) {
+      // If there is an error or stderr, callback with it
+      err = err || stderr;
+      if (err) {
+        done(err);
+      } else {
+      // Otherwise, assert the test suite ran successfully
+        expect(stdout).to.contain('( ^ .^)');
+        // '( ^ .^)'; // Success face
+        // '( - .-)'; // Pending face
+        // '( o .o)'; // Fail face
+        done();
+      }
+    });
     done();
   });
 
-  it('b', '');
+  // it('b', '');
   // it('c', function () { throw new Error('=('); });
 });
 
