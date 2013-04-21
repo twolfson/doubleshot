@@ -334,7 +334,8 @@ if (program.watch) {
 // load
 
 doubleshot.files = files;
-doubleshot.run(process.exit);
+// doubleshot.run(process.exit);
+module.exports = doubleshot;
 
 // enable growl notifications
 

@@ -16,119 +16,95 @@ program
   .option('-O, --outline <pattern>', 'Path to outline files (minimatch accepted)')
   .option('-N, --content <pattern>', 'Path to content files (minimatch accepted)')
 
-// Load in _doubleshot
-require('./_doubleshot');
+// Construct a doubleshot with mocha params
+var doubleshot = require('./_doubleshot');
 
-// // Localize and fallback info from dir
-// var glob = require('glob'),
-//     testDir = process.argv[2],
-//     outlinePaths = argv.outline,
-//     contentPaths = argv.content;
+// Localize and fallback info from dir
+var glob = require('glob'),
+    testDir = process.argv[2],
+    outlinePaths = program.outline,
+    contentPaths = program.content;
 
 
-// // If there is no testDir or it is an option, fallback to `test`
-// if (!testDir || testDir.match(/^\-/)) {
-//   testDir = 'test';
-// }
+// If there is no testDir or it is an option, fallback to `test`
+if (!testDir || testDir.match(/^\-/)) {
+  testDir = 'test';
+}
 
-// // Helper function to filter for existing file paths
-// var path = require('path'),
-//     cwd = process.cwd();
-// function resolveFiles(params) {
-//   // Localize params
-//   var paths = params.paths,
-//       dir = params.dir,
-//       namespace = params.namespace;
+// Helper function to filter for existing file paths
+var path = require('path'),
+    cwd = process.cwd();
+function resolveFiles(params) {
+  // Localize params
+  var paths = params.paths,
+      dir = params.dir,
+      namespace = params.namespace;
 
-//   // Begin searching for files
-//   var files = [];
+  // Begin searching for files
+  var files = [];
 
-//   // If there are no outline paths, attempt to locate them in dir
-//   if (!paths) {
-//     // Look for {{dir}}/*_outline* (e.g. test/doubleshot_outline.json)
-//     files = glob.sync(dir + '/*_' + namespace + '.{js,json,node}');
+  // If there are no outline paths, attempt to locate them in dir
+  if (!paths) {
+    // Look for {{dir}}/*_outline* (e.g. test/doubleshot_outline.json)
+    files = glob.sync(dir + '/*_' + namespace + '.{js,json,node}');
 
-//     // If none is found, look for {{dir}}/outline/**/* (e.g. test/outline/doubleshot.json)
-//     if (files.length === 0) {
-//       files = glob.sync(dir + '/' + namespace + '/**/*.{js,json,node}');
-//     }
-//   } else {
-//   // Otherwise, resolve paths via glob
-//     files = glob.sync(paths);
-//   }
+    // If none is found, look for {{dir}}/outline/**/* (e.g. test/outline/doubleshot.json)
+    if (files.length === 0) {
+      files = glob.sync(dir + '/' + namespace + '/**/*.{js,json,node}');
+    }
+  } else {
+  // Otherwise, resolve paths via glob
+    files = glob.sync(paths);
+  }
 
-//   // If there are files, expand their paths
-//   if (files.length) {
-//     files = files.map(function getProperPath (filepath) {
-//       return path.join(cwd, filepath);
-//     });
-//   }
+  // If there are files, expand their paths
+  if (files.length) {
+    files = files.map(function getProperPath (filepath) {
+      return path.join(cwd, filepath);
+    });
+  }
 
-//   // Return files
-//   return files;
-// }
+  // Return files
+  return files;
+}
 
-// // Resolve outlineFiles and contentFiles
-// var outlineFiles = resolveFiles({
-//       paths: outlinePaths,
-//       dir: testDir,
-//       namespace: 'outline'
-//     }),
-//     contentFiles = resolveFiles({
-//       paths: contentPaths,
-//       dir: testDir,
-//       namespace: 'content'
-//     });
+// Resolve outlineFiles and contentFiles
+var outlineFiles = resolveFiles({
+      paths: outlinePaths,
+      dir: testDir,
+      namespace: 'outline'
+    }),
+    contentFiles = resolveFiles({
+      paths: contentPaths,
+      dir: testDir,
+      namespace: 'content'
+    });
 
-// // If there are no outline files, notify the user and quit
-// if (outlineFiles.length === 0) {
-//   console.error('No doubleshot outline files could be found.');
-//   console.error('Please place them as `test/{{name}}_outline.json`, `test/outline/{{name}}.json` or specify them via `--outline`.');
-//   console.log('');
-//   options.showHelp();
-//   process.exit(1);
-// }
+// If there are no outline files, notify the user and quit
+if (outlineFiles.length === 0) {
+  console.error('No doubleshot outline files could be found.');
+  console.error('Please place them as `test/{{name}}_outline.json`, `test/outline/{{name}}.json` or specify them via `--outline`.');
+  console.log('');
+  program.outputHelp();
+  process.exit(1);
+}
 
-// // Similarly notify for contentFiles
-// if (contentFiles.length === 0) {
-//   console.error('No doubleshot content files could be found.');
-//   console.error('Please place them as `test/{{name}}_content.js`, `test/content/{{name}}.js` or specify them via `--content`.');
-//   console.log('');
-//   options.showHelp();
-//   process.exit(1);
-// }
+// Similarly notify for contentFiles
+if (contentFiles.length === 0) {
+  console.error('No doubleshot content files could be found.');
+  console.error('Please place them as `test/{{name}}_content.js`, `test/content/{{name}}.js` or specify them via `--content`.');
+  console.log('');
+  program.outputHelp();
+  process.exit(1);
+}
 
-// // Grab the first two args and append the remaining ones
-// // DEV: First two args are always `node [...]/doubleshot
-// var argv = process.argv.slice(0, 2);
+// Load in files
+var outlineArr = outlineFiles.map(require),
+    contentArr = contentFiles.map(require);
 
-// // Walk over the remaining args
-// var lastWasOurFlag;
-// process.argv.slice(2).forEach(function (arg) {
-//   // If the argument is `--outline`/`-outline`/`--content`/`-content`, then skip it
-//   if (arg.match(/^\-?\-(outline|content)$/)) {
-//     // Mark that the last was ours
-//     lastWasOurFlag = true;
-//   } else if (lastWasOurFlag) {
-//   // Otherwise, if the last flag was ours, skip this one and turn off our flag
-//     lastWasOurFlag = false;
-//   } else {
-//   // Otherwise, save this argument
-//     argv.push(arg);
-//   }
-// });
+// Add the outline and content to doubleshot
+outlineArr.forEach(doubleshot.addOutline, doubleshot);
+contentArr.forEach(doubleshot.addContent, doubleshot);
 
-// // Override process.argv and process.argc so mocha behaves
-// process.argv = argv;
-// process.argc = argv.length;
-
-// // Load in files
-// var outlineArr = outlineFiles.map(require),
-//     contentArr = contentFiles.map(require);
-
-// // Call doubleshot
-// var doubleshot = require('../lib/doubleshot');
-// doubleshot({
-//   outlines: outlineArr,
-//   content: contentArr
-// });
+// Run doubleshot
+doubleshot.run(process.exit);
