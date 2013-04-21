@@ -273,11 +273,11 @@ var files = []
 // default files to test/*.{js,coffee}
 
 // TODO: Deal with outline and content
-if (args.length) {
-  args.forEach(function(arg){
-    files = files.concat(lookupFiles(arg, program.recursive));
-  });
-}
+// if (!args.length) args.push('test');
+
+args.forEach(function(arg){
+  files = files.concat(lookupFiles(arg, program.recursive));
+});
 
 // resolve
 
