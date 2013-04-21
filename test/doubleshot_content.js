@@ -1,11 +1,13 @@
 var assert = require('assert');
 module.exports = {
+  // Basic tests
   'A test': function () {
     this.sum = 1;
   },
   'can be run': function () {
     assert.strictEqual(this.sum, 1);
   },
+
   'using aliasing': 'copy sum',
   'copy sum': function () {
     this.sum2 = this.sum;
@@ -13,6 +15,7 @@ module.exports = {
   'runs': function () {
     assert.strictEqual(this.sum2, 1);
   },
+
   'A test using expansion': ['Three', 'minus two'],
   'Three': function () {
     this.sum3 = 3;
@@ -23,6 +26,7 @@ module.exports = {
   'can run properly': function () {
     assert.strictEqual(this.sum3, 1);
   },
+
   'A test using async expansion': ['Async', 'expansion'],
   'Async': function (done) {
     var that = this;
@@ -41,6 +45,8 @@ module.exports = {
   'still completes': function () {
     assert.strictEqual(this.asyncB, true);
   },
+
+  // Kitchn sink test
   'One context': function () {
     this.number = 1;
   },

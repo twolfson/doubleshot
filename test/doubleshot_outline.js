@@ -19,7 +19,7 @@ module.exports = [{
     "still completes": true
   }
 }, {
-// Kitchen sync test
+// Kitchen sink tests
   "One context": {
     "is run in isolation from other batches": true
   }
