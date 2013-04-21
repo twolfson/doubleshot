@@ -272,7 +272,8 @@ var files = []
 
 // default files to test/*.{js,coffee}
 
-if (!args.length) args.push('test');
+// TODO: Deal with outline and content
+// if (!args.length) args.push('test');
 
 args.forEach(function(arg){
   files = files.concat(lookupFiles(arg, program.recursive));
@@ -331,10 +332,12 @@ if (program.watch) {
   return;
 }
 
-// load
+// // load
 
-doubleshot.files = files;
+// doubleshot.files = files;
 // doubleshot.run(process.exit);
+
+// Expose for re-use by `bin/doubleshot`
 module.exports = doubleshot;
 
 // enable growl notifications
