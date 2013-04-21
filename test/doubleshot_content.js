@@ -40,5 +40,17 @@ module.exports = {
   },
   'still completes': function () {
     assert.strictEqual(this.asyncB, true);
+  },
+  'One context': function () {
+    this.number = 1;
+  },
+  'is run in isolation from other batches': function () {
+    assert.strictEqual(this.number, 1);
+  },
+  'Another context': function () {
+    this.number = 2;
+  },
+  'is isolated from the first context': function () {
+    assert.strictEqual(this.number, 2);
   }
 };

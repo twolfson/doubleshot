@@ -16,4 +16,12 @@
   "A test using async expansion": {
     "still completes": true
   }
+}, {
+  "One context": {
+    "is run in isolation from other batches": true
+  }
+}, {
+  "Another context": {
+    "is isolated from the first context": true
+  }
 }]
