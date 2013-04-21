@@ -1,8 +1,10 @@
-[{
+module.exports = [{
+// Basic tests
   "A test": {
     "can be run": true
   }
 }, {
+// Intermediate tests
   "A test": {
     "using aliasing": {
       "runs": true
@@ -17,6 +19,7 @@
     "still completes": true
   }
 }, {
+// Kitchen sync test
   "One context": {
     "is run in isolation from other batches": true
   }
@@ -24,4 +27,4 @@
   "Another context": {
     "is isolated from the first context": true
   }
-}]
+}];

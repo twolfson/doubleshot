@@ -103,7 +103,7 @@ describe('doubleshot', function () {
     async.waterfall([
       // Run doubleshot with mocha options
       function runDblMochaOptions (cb) {
-        var cmd = doubleshot + ' --outline test/doubleshot_outline.json --content test/doubleshot_content.js --reporter nyan';
+        var cmd = doubleshot + ' --outline test/doubleshot_outline.js --content test/doubleshot_content.js --reporter nyan';
         exec(cmd, cb);
       },
       // Clean up and errors from stderr
