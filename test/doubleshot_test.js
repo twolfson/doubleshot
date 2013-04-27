@@ -66,7 +66,7 @@ describe('doubleshot', function () {
       // Run doubleshot implicitly
       function runDblImplicitly (cb) {
         // var child = cp.spawn(doubleshot);
-        var child = cp.spawn('echo %CD%');
+        var child = cp.spawn('echo', ['%CD%']);
         var stdout = '';
         child.stdout.on('data', function (a) {
           stdout += a;
