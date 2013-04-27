@@ -57,14 +57,7 @@ function assertNyanSuccess(stdout, cb) {
 // Content
 // Basic tests
 var path = require('path'),
-    doubleshot = path.resolve(__dirname, '../bin/doubleshot');
-
-// If we are on Windows, use .cmd
-console.log(process.arch);
-if (process.arch === 'win32') {
-  doubleshot += '.cmd';
-}
-
+    doubleshot = 'node ' + path.resolve(__dirname, '../bin/doubleshot');
 describe('doubleshot', function () {
   it('reads the `test` directory implicitly', function (done) {
     async.waterfall([
