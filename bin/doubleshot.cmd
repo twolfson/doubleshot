@@ -1,2 +1,1 @@
-@echo off
-node bin/doubleshot %*
+node %CD%/bin/doubleshot %*
