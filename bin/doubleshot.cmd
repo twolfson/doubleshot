@@ -1,1 +1,1 @@
-node %CD%/bin/doubleshot %*
+node bin/doubleshot %*

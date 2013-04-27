@@ -72,16 +72,18 @@ describe('doubleshot', function () {
         // var child = cp.spawn('node', ['-e', 'console.log(1)']);
         var stdout = '';
         child.stdout.on('data', function (a) {
+          console.log('data', a + '');
           stdout += a;
         });
         var stderr = '';
         child.stderr.on('data', function (a) {
+          console.log('err', a + '');
           stderr += a;
         });
         console.log('bbbb');
-        child.on('close', function () {
+        child.on('close', function (code) {
           console.log('aaaa');
-          console.log(stdout, stderr);
+          console.log('output', code, stdout, stderr);
           console.log('ggg');
           done(null, stdout, stderr);
         });
