@@ -20,6 +20,7 @@ program
 var doubleshot = require('./_doubleshot');
 
 // Localize and fallback info from dir
+// DEV: Always looks like node doubleshot arg1 arg2
 var glob = require('glob'),
     testDir = process.argv[2],
     outlinePaths = program.outline,
@@ -107,4 +108,9 @@ outlineArr.forEach(doubleshot.addOutline, doubleshot);
 contentArr.forEach(doubleshot.addContent, doubleshot);
 
 // Run doubleshot
-doubleshot.run(process.exit);
+doubleshot.run(function () {
+  // DEV: On Windows machines, process.exit permaturely occurs before reporter is done. This is to delay that.
+  setTimeout(function () {
+    process.exit();
+  }, 15);
+});
