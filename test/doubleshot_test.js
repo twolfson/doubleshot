@@ -39,6 +39,7 @@ function cleanStdErr(stdout, stderr, cb) {
 
 // Assertions for `dot` reporter
 function assertDotSuccess(stdout, cb) {
+  // console.log(stdout);
   expect(stdout).to.contain('complete');
   expect(stdout).to.not.contain('pending');
   expect(stdout).to.not.contain('failed');

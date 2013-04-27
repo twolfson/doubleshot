@@ -20,6 +20,7 @@ program
 var doubleshot = require('./_doubleshot');
 
 // Localize and fallback info from dir
+// DEV: Always looks like node doubleshot arg1 arg2
 var glob = require('glob'),
     testDir = process.argv[2],
     outlinePaths = program.outline,
