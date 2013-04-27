@@ -59,7 +59,7 @@ function assertNyanSuccess(stdout, cb) {
 // Basic tests
 var path = require('path'),
     // doubleshot = path.format('bin/doubleshot');
-    doubleshot = ('bin\\doubleshot');
+    doubleshot = ('bin\\doubleshot.cmd');
 console.log(doubleshot);
 describe('doubleshot', function () {
   it('reads the `test` directory implicitly', function (done) {
