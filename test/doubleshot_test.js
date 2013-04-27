@@ -58,15 +58,18 @@ function assertNyanSuccess(stdout, cb) {
 // Content
 // Basic tests
 var path = require('path'),
-    doubleshot = path.resolve(__dirname, '../bin/doubleshot');
+    // doubleshot = path.format('bin/doubleshot');
+    doubleshot = ('bin\\doubleshot');
 console.log(doubleshot);
 describe('doubleshot', function () {
   it('reads the `test` directory implicitly', function (done) {
     async.waterfall([
       // Run doubleshot implicitly
       function runDblImplicitly (cb) {
-        // var child = cp.spawn(doubleshot);
-        var child = cp.spawn('node', ['-e', 'console.log(1)']);
+        var cwd = path.resolve(__dirname, '..');
+        console.log(cwd);
+        var child = cp.spawn(doubleshot, [], {'cwd': cwd});
+        // var child = cp.spawn('node', ['-e', 'console.log(1)']);
         var stdout = '';
         child.stdout.on('data', function (a) {
           stdout += a;
