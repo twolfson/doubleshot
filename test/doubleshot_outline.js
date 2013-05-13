@@ -27,4 +27,9 @@ module.exports = [{
   "Another context": {
     "is isolated from the first context": true
   }
+}, {
+// Another kitchen sink test
+  "Multiple levels of nested expansion": {
+    "are supported": true
+  }
 }];

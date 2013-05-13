@@ -46,7 +46,7 @@ module.exports = {
     assert.strictEqual(this.asyncB, true);
   },
 
-  // Kitchn sink test
+  // Kitchen sink test
   'One context': function () {
     this.number = 1;
   },
@@ -58,5 +58,25 @@ module.exports = {
   },
   'is isolated from the first context': function () {
     assert.strictEqual(this.number, 2);
+  },
+
+  // Another kitchen sink test
+  'Multiple levels of nested expansion': ['Multiple levels', 'nested expansion'],
+  'Multiple levels': ['Multiple', 'levels'],
+  'nested expansion': ['nested', 'expando'],
+  'Multiple': function () {
+    this.nestedNumber = 1;
+  },
+  'levels': function () {
+    this.nestedNumber += 2;
+  },
+  'nested': function () {
+    this.nestedNumber += 3;
+  },
+  'expando': function () {
+    this.nestedNumber += 4;
+  },
+  'are supported': function () {
+    assert.strictEqual(this.nestedNumber, 10);
   }
 };
