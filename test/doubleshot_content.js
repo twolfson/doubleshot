@@ -70,9 +70,11 @@ module.exports = {
   'levels': function () {
     this.nestedNumber += 2;
   },
-  'nested': function () {
+  'nested': ['nested2'],
+  'nested2': 'nested3',
+  'nested3': [function () {
     this.nestedNumber += 3;
-  },
+  }],
   'expando': function () {
     this.nestedNumber += 4;
   },
