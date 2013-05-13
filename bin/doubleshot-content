@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+// TODO: Help prompt upon failure
+
+// Load in our modules and environment
+var assert = require('assert'),
+    fs = require('fs'),
+    path = require('path'),
+    cwd = process.cwd();
+
+// Determine where we will be converting
+var argv = process.argv,
+    outlineRawPath = argv[2],
+    contentRawPath = argv[3] || outlinePath.replace('outline', 'content');
+
+// Attempt to resolve the file
+var outlinePath = path.resolve(cwd, outlinePath),
+    outline = require(outlinePath);
+
+console.log(outline);
+
+// Normalize into an object
+
+// Flatten the nested object
+
+// Replace all values with functions
+
+// Stringify our
+
+// Write out to the destination
+
+// Notify the user of success
