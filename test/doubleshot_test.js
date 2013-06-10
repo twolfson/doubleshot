@@ -72,101 +72,101 @@ describe('doubleshot', function () {
     ], done);
   });
 
-  it('allows for usage of `mocha` options', function (done) {
-    async.waterfall([
-      // Run doubleshot with mocha options
-      function runDblMochaOptions (cb) {
-        var cmd = doubleshot + ' --reporter nyan';
-        exec(cmd, cb);
-      },
-      // Clean up and errors from stderr
-      cleanStdErr,
-      // Assert the test suite ran successfully
-      assertNyanSuccess
-    ], done);
-  });
+//   it('allows for usage of `mocha` options', function (done) {
+//     async.waterfall([
+//       // Run doubleshot with mocha options
+//       function runDblMochaOptions (cb) {
+//         var cmd = doubleshot + ' --reporter nyan';
+//         exec(cmd, cb);
+//       },
+//       // Clean up and errors from stderr
+//       cleanStdErr,
+//       // Assert the test suite ran successfully
+//       assertNyanSuccess
+//     ], done);
+//   });
 
-  it('allows for explicit directory specification', function (done) {
-    async.waterfall([
-      // Run doubleshot with mocha options
-      function runDblMochaOptions (cb) {
-        var cmd = doubleshot + ' test';
-        exec(cmd, cb);
-      },
-      // Clean up and errors from stderr
-      cleanStdErr,
-      // Assert the test suite ran successfully
-      assertDotSuccess
-    ], done);
-  });
+//   it('allows for explicit directory specification', function (done) {
+//     async.waterfall([
+//       // Run doubleshot with mocha options
+//       function runDblMochaOptions (cb) {
+//         var cmd = doubleshot + ' test';
+//         exec(cmd, cb);
+//       },
+//       // Clean up and errors from stderr
+//       cleanStdErr,
+//       // Assert the test suite ran successfully
+//       assertDotSuccess
+//     ], done);
+//   });
 
-  it('allows for explicity file (and pattern) matching alongside mocha options', function (done) {
-    async.waterfall([
-      // Run doubleshot with mocha options
-      function runDblMochaOptions (cb) {
-        var cmd = doubleshot + ' --outline test/doubleshot_outline.js --content test/doubleshot_content.js --reporter nyan';
-        exec(cmd, cb);
-      },
-      // Clean up and errors from stderr
-      cleanStdErr,
-      // Assert the test suite ran successfully
-      assertNyanSuccess
-    ], done);
-  });
-});
+//   it('allows for explicity file (and pattern) matching alongside mocha options', function (done) {
+//     async.waterfall([
+//       // Run doubleshot with mocha options
+//       function runDblMochaOptions (cb) {
+//         var cmd = doubleshot + ' --outline test/doubleshot_outline.js --content test/doubleshot_content.js --reporter nyan';
+//         exec(cmd, cb);
+//       },
+//       // Clean up and errors from stderr
+//       cleanStdErr,
+//       // Assert the test suite ran successfully
+//       assertNyanSuccess
+//     ], done);
+//   });
+// });
 
-describe('doubleshot', function () {
-  it('warns user when keys are unused', function (done) {
-    // Run doubleshot against unused keys files
-    var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
-    exec(cmd, function handleDblUnusedKeys (err, stdout, stderr) {
-      // If there is an error, callback
-      if (err) { return done(err); }
+// describe('doubleshot', function () {
+//   it('warns user when keys are unused', function (done) {
+//     // Run doubleshot against unused keys files
+//     var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
+//     exec(cmd, function handleDblUnusedKeys (err, stdout, stderr) {
+//       // If there is an error, callback
+//       if (err) { return done(err); }
 
-      // Assert stderr contains info about failing items
-      expect(stderr).to.contain('equals three');
-      expect(stderr).to.contain('not used');
+//       // Assert stderr contains info about failing items
+//       expect(stderr).to.contain('equals three');
+//       expect(stderr).to.contain('not used');
 
-      // Callback
-      done();
-    });
-  });
+//       // Callback
+//       done();
+//     });
+//   });
 
-  it('warns user when keys are not found', function (done) {
-    // Run doubleshot against unused keys files
-    var cmd = doubleshot + ' --content test/test_files/keys_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
-    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
-      // If there is an error, callback
-      if (err) { return done(err); }
+//   it('warns user when keys are not found', function (done) {
+//     // Run doubleshot against unused keys files
+//     var cmd = doubleshot + ' --content test/test_files/keys_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
+//     exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+//       // If there is an error, callback
+//       if (err) { return done(err); }
 
-      // Assert stderr contains info about failing items
-      expect(stderr).to.contain('equals two');
-      expect(stderr).to.match(/not .* found/);
+//       // Assert stderr contains info about failing items
+//       expect(stderr).to.contain('equals two');
+//       expect(stderr).to.match(/not .* found/);
 
-      // Callback
-      done();
-    });
-  });
+//       // Callback
+//       done();
+//     });
+//   });
 
-  it('can be run against a folder not labelled `test` and options exclusively', function (done) {
-    // Move to the current directory for execution
-    var cwd = process.cwd();
-    process.chdir(__dirname + '/test_files');
+//   it('can be run against a folder not labelled `test` and options exclusively', function (done) {
+//     // Move to the current directory for execution
+//     var cwd = process.cwd();
+//     process.chdir(__dirname + '/test_files');
 
-    // Run doubleshot against spec folder
-    var cmd = doubleshot + ' --content spec/content.js --outline spec/outline.json';
-    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
-      // If there is an error, callback
-      if (err) { return done(err); }
+//     // Run doubleshot against spec folder
+//     var cmd = doubleshot + ' --content spec/content.js --outline spec/outline.json';
+//     exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+//       // If there is an error, callback
+//       if (err) { return done(err); }
 
-      // Assert stderr is empty
-      expect(stderr).to.equal('');
+//       // Assert stderr is empty
+//       expect(stderr).to.equal('');
 
-      // Go back to original directory
-      process.chdir(cwd);
+//       // Go back to original directory
+//       process.chdir(cwd);
 
-      // Callback
-      done();
-    });
-  });
+//       // Callback
+//       done();
+//     });
+//   });
 });
