@@ -83,14 +83,11 @@ module.exports = {
   },
 
   // More kitchen sink test
-  'U': function () {},
-  'V': function () {
-    this.a = [1, 2, 3];
+  'One more context': function () {
+    this.chainedContext = [1, 2, 3];
   },
-  'W': [function (done) {
-    process.nextTick(done);
-  }, 'X'],
-  'X': function () {
+  'is preserved during chaining': ['chained assert'],
+  'chained assert': function () {
     assert.deepEqual(this.a, [1, 2, 3]);
   }
 };

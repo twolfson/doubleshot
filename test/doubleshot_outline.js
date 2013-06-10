@@ -33,9 +33,8 @@ module.exports = [{
     "are supported": true
   }
 }, {
-  "U": {
-    "V": {
-      "W": true
-    }
+// More kitchen sink test
+  "One more context": {
+    "is preserved during chaining": true
   }
 }];
