@@ -80,5 +80,17 @@ module.exports = {
   },
   'are supported': function () {
     assert.strictEqual(this.nestedNumber, 10);
+  },
+
+  // More kitchen sink test
+  'U': function () {},
+  'V': function () {
+    this.a = [1, 2, 3];
+  },
+  'W': [function (done) {
+    process.nextTick(done);
+  }, 'X'],
+  'X': function () {
+    assert.deepEqual(this.a, [1, 2, 3]);
   }
 };

@@ -32,4 +32,10 @@ module.exports = [{
   "Multiple levels of nested expansion": {
     "are supported": true
   }
+}, {
+  "U": {
+    "V": {
+      "W": true
+    }
+  }
 }];
