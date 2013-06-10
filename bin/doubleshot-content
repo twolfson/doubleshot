@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // TODO: Help prompt upon failure
+// TODO: Add to README
 
 // Load in our modules and environment
 var assert = require('assert'),
