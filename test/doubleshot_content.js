@@ -88,6 +88,6 @@ module.exports = {
   },
   'is preserved during chaining': ['chained assert'],
   'chained assert': function () {
-    assert.deepEqual(this.a, [1, 2, 3]);
+    assert.deepEqual(this.chainedContext, [1, 2, 3]);
   }
 };

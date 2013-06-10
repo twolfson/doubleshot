@@ -28,6 +28,7 @@ var kitchenSink = {
 // Handle stderr throwbacks
 function cleanStdErr(stdout, stderr, cb) {
   // If there were any errors, callback with them
+  console.log(stdout);
   if (stderr) {
     var err = new Error(stderr);
     cb(err);
