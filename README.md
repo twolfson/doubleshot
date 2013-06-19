@@ -1,4 +1,4 @@
-# doubleshot
+# doubleshot [![Donate on Gittip](http://badgr.co/gittip/twolfson.png)](https://www.gittip.com/twolfson/)
 
 Run separated BDD outlines and content on Mocha.
 
