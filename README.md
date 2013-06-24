@@ -120,10 +120,84 @@ describe('A banana', function () {
 ```
 
 ### Content format
-TODO: One big object
+Content does not distinguish `context` from `assertion` since in `mocha` they have the same signature. To aim for the simplest format possible, we collect them in a large object.
 
-### Context
-TODO: Explain `this` usage
+The keys represent the name of the `context`/`assertion` you used in the `outline`.
+
+If the key is for a context, the `function` will be run in a `before` block.
+
+If the key is for an assertion, the `function` will be run in an `it` block.
+
+The following code
+
+```js
+{
+  'A banana': function () {
+    var banana = new Banana();
+  },
+  'is yellow': function () {
+    assert.strictEqual(banana.color, 'yellow');
+  }
+}
+```
+
+compiles to (given an outline)
+
+```js
+describe('A banana', function () {
+  before(function () {
+    var banana = new Banana();
+  });
+
+  it('is yellow', function () {
+    assert.strictEqual(banana.color, 'yellow');
+  });
+});
+```
+
+### Context, using `this`
+`mocha` allows for the usage of `this` as a shared store between all contexts and assertions.
+
+This means, if you define a property on `this` in a `before` block, you can read it in the `it` block.
+
+In `doubleshot`, this is strongly encouraged to prevent global namespace pollution (i.e. writing to `window` or `global` to share variables) or scope leaks (i.e. writing to a `var` outside of the current function.
+
+Here is a usage in `mocha`
+
+```
+describe('A banana', function () {
+  before(function () {
+    // Save this banana to the test context
+    this.banana = new Banana();
+  });
+
+  it('is yellow', function () {
+    // Retrieve the banana from the test context
+    var banana = this.banana;
+
+    // Test against the banana
+    assert.strictEqual(banana.color, 'yellow');
+  });
+});
+```
+
+Here is that same usage in `doubleshot`
+
+```js
+{
+  'A banana': function () {
+    // Save this banana to the test context
+    this.banana = new Banana();
+  },
+  'is yellow': function () {
+    // Retrieve the banana from the test context
+    var banana = this.banana;
+
+    // Test against the banana
+    assert.strictEqual(banana.color, 'yellow');
+  }
+}
+```
 
 ### Combining outline and content
 TODO: Explain keys matching
