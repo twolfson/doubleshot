@@ -200,13 +200,62 @@ Here is that same usage in `doubleshot`
 ```
 
 ### Combining outline and content
-TODO: Explain keys matching
+The combination process in `doubleshot` is string matching. If a `key` in `outline` matches a `key` in `content`, then the value from `content` is assigned to that from `outline`.
+
+If you have any keys in one set that are not matched to another, `doubleshot` will let you know via a `console.error` message.
+
+When we combine this outline
+
+```js
+{
+  'A banana': [
+    'is yellow',
+    'has a peel'
+  ]
+}
+```
+
+and this content
+
+```js
+{
+  'A banana': function () {
+    this.banana = new Banana();
+  },
+  'is yellow': function () {
+    assert.strictEqual(this.banana.color, 'yellow');
+  }
+  'has a peel': function () {
+    assert(this.banana.peel);
+  }
+}
+```
+
+They match along the `A banana`, `is yellow`, and `has a peel` keys, returning us
+
+```js
+describe('A banana', function () {
+  before(function () {
+    this.banana = new Banana();
+  });
+
+  it('is yellow', function () {
+    assert.strictEqual(this.banana.color, 'yellow');
+  });
+
+  it('has a peel', function () {
+    assert(this.banana.peel);
+  });
+});
+```
 
 ### Aliasing and expansion
 One of the bonus features of `doubleshot` is aliasing and expansion.
 
 #### Aliasing
 Any key you define inside of `content` can be the name of another `content` property (e.g. `"1"` can point to `"One"`).
+
+If an alias is not found, you will be notified via a `console.error` message.
 
 #### Expansion
 Any key you define inside of `content` can be an array of names of other `content` properties (e.g. `"1 + 2"` can point to `"One"` and `"plus two"`, which are run in order).
