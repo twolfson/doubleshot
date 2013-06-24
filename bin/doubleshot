@@ -99,17 +99,15 @@ if (contentFiles.length === 0) {
   process.exit(1);
 }
 
-// Load in files
-var outlineArr = outlineFiles.map(require),
-    contentArr = contentFiles.map(require);
-
-// Add the outline and content to doubleshot
-outlineArr.forEach(doubleshot.addOutline, doubleshot);
-contentArr.forEach(doubleshot.addContent, doubleshot);
+// Set up files
+var files = {
+      outlines: outlineFiles,
+      contents: contentFiles
+    };
 
 // If there was a `watch` request, watch
 if (program.watch) {
-  doubleshot._watch();
+  doubleshot._watch(files);
 } else {
 // Otherwise, run doubleshot
   doubleshot.run(function () {
