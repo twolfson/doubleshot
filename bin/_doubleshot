@@ -287,6 +287,8 @@ files = files.map(function(path){
 
 // --watch
 
+doubleshot._watch = function () {
+
 if (program.watch) {
   console.log();
   hideCursor();
@@ -333,6 +335,8 @@ if (program.watch) {
 
   return;
 }
+
+};
 
 // // load
 
