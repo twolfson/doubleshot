@@ -61,21 +61,9 @@ test/{{name}}_content.js OR test/content/{{name}}.js
 Accepted file extensions are: `js`, `json`, `node`
 ```
 
-Alternatively, you can specify a pattern to find them.
+Alternatively, you can specify a [minimatch][minimatch] pattern to find them via `--outline` and `--content` options on the command line.
 
-```shell
-doubleshot --help
-
-Run separated BDD outlines and content on Mocha.
-Usage: node ./bin/doubleshot [test dir] [--options]
-
-Options:
-  --outline  Path to outline files (minimatch accepted)
-  --content  Path to content files (minimatch accepted)
-  --help     You are reading it                          [boolean]
-```
-
-There is an underlying library, however, it currently cannot be used in isolation.
+[minimatch]: https://github.com/isaacs/minimatch
 
 ### Outline format
 In `doubleshot<=2.0.0`, there was an issue with the context ordering. The latest format is the thinnest but is running away from its [vows][vows] roots.
@@ -284,7 +272,6 @@ You can infinitely chain aliases and expansions (e.g. `"1 + 2"` -> `["1", "+ 2"]
 
 ## Examples
 Here is a full example of using expansion and aliasing:
-
 
 ```js
 // outline.json
