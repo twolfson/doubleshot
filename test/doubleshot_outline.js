@@ -1,40 +1,42 @@
 module.exports = [{
 // Basic tests
-  "A test": {
-    "can be run": true
-  }
+  "A test": [
+    "can be run"
+  ]
 }, {
 // Intermediate tests
-  "A test": {
-    "using aliasing": {
-      "runs": true
+  "A test": [
+    {
+      "using aliasing": [
+        "runs"
+      ]
     }
-  }
+  ]
 }, {
-  "A test using expansion": {
-    "can run properly": true
-  }
+  "A test using expansion": [
+    "can run properly"
+  ]
 }, {
-  "A test using async expansion": {
-    "still completes": true
-  }
+  "A test using async expansion": [
+    "still completes"
+  ]
 }, {
 // Kitchen sink tests
-  "One context": {
-    "is run in isolation from other batches": true
-  }
+  "One context": [
+    "is run in isolation from other batches"
+  ]
 }, {
-  "Another context": {
-    "is isolated from the first context": true
-  }
+  "Another context": [
+    "is isolated from the first context"
+  ]
 }, {
 // Another kitchen sink test
-  "Multiple levels of nested expansion": {
-    "are supported": true
-  }
+  "Multiple levels of nested expansion": [
+    "are supported"
+  ]
 }, {
 // More kitchen sink test
-  "One more context": {
-    "is preserved during chaining": true
-  }
+  "One more context": [
+    "is preserved during chaining"
+  ]
 }];
