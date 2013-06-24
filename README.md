@@ -1,6 +1,6 @@
 # doubleshot
 
-Run separated BDD outlines and content on Mocha.
+Run separated BDD outlines and content on top of [mocha][mocha].
 
 `doubleshot` serves the single purpose of separating BDD outlines from their implementation. The benefits I will highlight are chaining and re-use of tests.
 
@@ -8,6 +8,7 @@ There are additional benefits such as re-using outlines between different framew
 
 This concept has been birthed out of my previous attempts to achieve a cross-framework testing solution (i.e. [sculptor][sculptor] and [crossbones][crossbones]).
 
+[mocha]: https://github.com/visionmedia/mocha/
 [sculptor]: https://github.com/twolfson/sculptor
 [crossbones]: https://github.com/Ensighten/crossbones
 
@@ -43,6 +44,12 @@ describe('One', function () {
     assert.strictEqual(this.one, 1);
   });
 });
+
+// Output looks like
+$ doubleshot --reporter spec
+
+  One
+    ✓ is equal to one
 ```
 
 ## Documentation
@@ -70,11 +77,56 @@ Options:
 
 There is an underlying library, however, it currently cannot be used in isolation.
 
-### Test format
-TODO: Explain strings vs arrays vs
+### Outline format
+In `doubleshot<=2.0.0`, there was an issue with the context ordering. The latest format is the thinnest but is running away from its [vows][vows] roots.
+
+[vows]: http://vowsjs.org/
+
+Any new context (i.e. `describe` in `mocha`) is an object followed by an array. This array can either contain assertions or more contexts. The array is required for ensure that actions are run in order.
+
+Any assertion (i.e. `it` in `mocha`) is a string.
+
+The following outline
+
+```js
+{
+  // 'A banana' performs a `describe`
+  'A banana': [
+    // 'is yellow' and 'has a peel' perform `it`s
+    'is yellow',
+    'has a peel',
+    {
+      'when peeled': [
+        'is white',
+        'is soft'
+      ]
+    }
+  ]
+}
+```
+
+compiles to
+
+```js
+describe('A banana', function () {
+  it('is yellow', contentGoesHere);
+  it('has a peel', contentGoesHere);
+
+  describe('when peeled', function () {
+    it('is white', contentGoesHere);
+    it('is soft', contentGoesHere);
+  });
+});
+```
+
+### Content format
+TODO: One big object
 
 ### Context
 TODO: Explain `this` usage
+
+### Combining outline and content
+TODO: Explain keys matching
 
 ### Aliasing and expansion
 One of the bonus features of `doubleshot` is aliasing and expansion.
