@@ -108,6 +108,7 @@ outlineArr.forEach(doubleshot.addOutline, doubleshot);
 contentArr.forEach(doubleshot.addContent, doubleshot);
 
 // Run doubleshot
+console.log('aaa', program.watch);
 doubleshot.run(function () {
   // DEV: On Windows machines, process.exit permaturely occurs before reporter is done. This is to delay that.
   setTimeout(function () {

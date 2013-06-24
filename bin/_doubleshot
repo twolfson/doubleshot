@@ -306,6 +306,8 @@ if (program.watch) {
 
   var watchFiles = utils.files(cwd);
 
+  console.log(watchFiles);
+
   function loadAndRun() {
     doubleshot.files = files;
     doubleshot.run(function(){
