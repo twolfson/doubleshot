@@ -107,10 +107,15 @@ var outlineArr = outlineFiles.map(require),
 outlineArr.forEach(doubleshot.addOutline, doubleshot);
 contentArr.forEach(doubleshot.addContent, doubleshot);
 
-// Run doubleshot
-doubleshot.run(function () {
-  // DEV: On Windows machines, process.exit permaturely occurs before reporter is done. This is to delay that.
-  setTimeout(function () {
-    process.exit();
-  }, 15);
-});
+// If there was a `watch` request, watch
+if (program.watch) {
+  doubleshot._watch();
+} else {
+// Otherwise, run doubleshot
+  doubleshot.run(function () {
+    // DEV: On Windows machines, process.exit permaturely occurs before reporter is done. This is to delay that.
+    setTimeout(function () {
+      process.exit();
+    }, 15);
+  });
+}
