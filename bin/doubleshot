@@ -99,14 +99,14 @@ if (contentFiles.length === 0) {
   process.exit(1);
 }
 
-// Set up files
-var files = {
-      outlines: outlineFiles,
-      contents: contentFiles
-    };
+// Add in the outlineFiles and contentFiles
+outlineFiles.forEach(doubleshot.addOutline, doubleshot);
+contentFiles.forEach(doubleshot.addContent, doubleshot);
 
 // If there was a `watch` request, watch
 if (program.watch) {
+  // Call watch function with our files
+  var files = doubleshot.files;
   doubleshot._watch(files);
 } else {
 // Otherwise, run doubleshot
