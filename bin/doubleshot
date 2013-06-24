@@ -14,7 +14,7 @@ var program = require('commander');
 program
   .usage('[debug] [test dir] [--options]')
   .option('-O, --outline <pattern>', 'Path to outline files (minimatch accepted)')
-  .option('-N, --content <pattern>', 'Path to content files (minimatch accepted)')
+  .option('-N, --content <pattern>', 'Path to content files (minimatch accepted)');
 
 // Construct a doubleshot with mocha params
 var doubleshot = require('./_doubleshot');
