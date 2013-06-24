@@ -2,7 +2,7 @@
 
 Run separated BDD outlines and content on Mocha.
 
-Doubleshot serves the single purpose of separating BDD outlines from their implementation. The benefits I will highlight are chaining and re-use of tests.
+`doubleshot` serves the single purpose of separating BDD outlines from their implementation. The benefits I will highlight are chaining and re-use of tests.
 
 There are additional benefits such as re-using outlines between different frameworks however an ecosystem is missing for that.
 
@@ -12,7 +12,7 @@ This concept has been birthed out of my previous attempts to achieve a cross-fra
 [crossbones]: https://github.com/Ensighten/crossbones
 
 ## Getting Started
-doubleshot is a global module and is run on the command line
+`doubleshot` is a global module and is run on the command line
 
 ```shell
 npm install -g doubleshot # Installs doubleshot globally
@@ -20,9 +20,7 @@ doubleshot # Runs content/outline files in test folder
 
 // test/outline.json
 {
-  "One": {
-    "is equal to one": true
-  }
+  "One": ["is equal to one"]
 };
 
 // test/content.js
@@ -72,23 +70,55 @@ Options:
 
 There is an underlying library, however, it currently cannot be used in isolation.
 
-## Examples
-A basic example can be found in the [getting-started][getting-started] section. Below is an advanced example using aliasing and expansion.
+### Test format
+TODO: Explain strings vs arrays vs
 
-[getting-started]: #getting-started
+### Context
+TODO: Explain `this` usage
+
+### Aliasing and expansion
+One of the bonus features of `doubleshot` is aliasing and expansion.
+
+#### Aliasing
+Any key you define inside of `content` can be the name of another `content` property (e.g. `"1"` can point to `"One"`).
+
+#### Expansion
+Any key you define inside of `content` can be an array of names of other `content` properties (e.g. `"1 + 2"` can point to `"One"` and `"plus two"`, which are run in order).
+
+#### Unlimited depth and chaining
+You can infinitely chain aliases and expansions (e.g. `"1 + 2"` -> `["1", "+ 2"]` -> `["One", "plus two"]` -> `["Zero", "plus one", "plus one", "plus one"]`). In code, that would look like
+
+```js
+// content.js
+{
+  "1 + 2": ["1", "+ 2"],
+  "1": "One",
+  "One": ["Zero", "plus one"],
+  "+ 2": "plus two",
+  "plus two": ["plus one", "plus one"],
+  "Zero": function () {
+    this.sum = 0;
+  },
+  "plus one": function () {
+    this.sum = 1;
+  }
+}
+```
+
+## Examples
+Below is an example of using expansion and aliasing.
+
 
 ```js
 // outline.json
 {
-  "One plus two": {
-    "is equal to three": true
-  }
+  "1 + 2": ["=3"]
 }
 
 // content.js
 {
   // Breaks 'One plus two' action into 2 actions
-  'One plus two': ['One', 'plus two'],
+  '1 + 2': ['One', 'plus two'],
   'One': function () {
     this.sum = 1;
   },
@@ -96,7 +126,7 @@ A basic example can be found in the [getting-started][getting-started] section. 
     this.sum += 2;
   },
   // Alias 'is equal to three' as 'equals three'
-  'is equal to three': 'equals three',
+  '= 3': 'equals three',
   'equals three': function () {
     assert.strictEqual(this.sum, 3);
   }
