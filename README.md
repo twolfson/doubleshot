@@ -86,7 +86,7 @@ Any new context (i.e. `describe` in `mocha`) is an object followed by an array. 
 
 Any assertion (i.e. `it` in `mocha`) is a string.
 
-The following outline
+The following outline:
 
 ```js
 {
@@ -105,7 +105,7 @@ The following outline
 }
 ```
 
-compiles to
+compiles to:
 
 ```js
 describe('A banana', function () {
@@ -124,11 +124,11 @@ Content does not distinguish `context` from `assertion` since in `mocha` they ha
 
 The keys represent the name of the `context`/`assertion` you used in the `outline`.
 
-If the key is for a context, the `function` will be run in a `before` block.
+If the `key` is for a `context`, the `function` will be run in a `before` block.
 
-If the key is for an assertion, the `function` will be run in an `it` block.
+If the `key` is for an `assertion`, the `function` will be run in an `it` block.
 
-The following code
+The following code:
 
 ```js
 {
@@ -141,7 +141,7 @@ The following code
 }
 ```
 
-compiles to (given an outline)
+compiles to:
 
 ```js
 describe('A banana', function () {
@@ -155,14 +155,14 @@ describe('A banana', function () {
 });
 ```
 
-### Context, using `this`
+### Context; using `this`
 `mocha` allows for the usage of `this` as a shared store between all contexts and assertions.
 
 This means, if you define a property on `this` in a `before` block, you can read it in the `it` block.
 
-In `doubleshot`, this is strongly encouraged to prevent global namespace pollution (i.e. writing to `window` or `global` to share variables) or scope leaks (i.e. writing to a `var` outside of the current function.
+In `doubleshot`, this is strongly encouraged to prevent global namespace pollution (i.e. writing to `window` or `global` to share variables) or scope leaks (i.e. writing to a `var` outside of the current function).
 
-Here is a usage in `mocha`
+Here is a usage in `mocha`:
 
 ```
 describe('A banana', function () {
@@ -181,7 +181,7 @@ describe('A banana', function () {
 });
 ```
 
-Here is that same usage in `doubleshot`
+Here is that same usage in `doubleshot`:
 
 ```js
 {
@@ -200,11 +200,11 @@ Here is that same usage in `doubleshot`
 ```
 
 ### Combining outline and content
-The combination process in `doubleshot` is string matching. If a `key` in `outline` matches a `key` in `content`, then the value from `content` is assigned to that from `outline`.
+The combination process in `doubleshot` is string matching. If a `key` in `outline` matches a `key` in `content`, then the `value` from `content` is assigned to that from `outline`.
 
 If you have any keys in one set that are not matched to another, `doubleshot` will let you know via a `console.error` message.
 
-When we combine this outline
+When we combine this outline:
 
 ```js
 {
@@ -215,7 +215,7 @@ When we combine this outline
 }
 ```
 
-and this content
+and this content:
 
 ```js
 {
@@ -231,7 +231,7 @@ and this content
 }
 ```
 
-They match along the `A banana`, `is yellow`, and `has a peel` keys, returning us
+They match along the `A banana`, `is yellow`, and `has a peel` keys, returning:
 
 ```js
 describe('A banana', function () {
@@ -260,8 +260,10 @@ If an alias is not found, you will be notified via a `console.error` message.
 #### Expansion
 Any key you define inside of `content` can be an array of names of other `content` properties (e.g. `"1 + 2"` can point to `"One"` and `"plus two"`, which are run in order).
 
+You can also define a function inline in your expansion (e.g. `"1 + 2" -> `["One", function () { /* plus two */ }]`)
+
 #### Unlimited depth and chaining
-You can infinitely chain aliases and expansions (e.g. `"1 + 2"` -> `["1", "+ 2"]` -> `["One", "plus two"]` -> `["Zero", "plus one", "plus one", "plus one"]`). In code, that would look like
+You can infinitely chain aliases and expansions (e.g. `"1 + 2"` -> `["1", "+ 2"]` -> `["One", "plus two"]` -> `["Zero", "plus one", "plus one", "plus one"]`). In code, that would look like:
 
 ```js
 // content.js
@@ -281,7 +283,7 @@ You can infinitely chain aliases and expansions (e.g. `"1 + 2"` -> `["1", "+ 2"]
 ```
 
 ## Examples
-Below is an example of using expansion and aliasing.
+Here is a full example of using expansion and aliasing:
 
 
 ```js
