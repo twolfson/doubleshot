@@ -19,10 +19,9 @@ This concept has been birthed out of my previous attempts to achieve a cross-fra
 npm install -g doubleshot # Installs doubleshot globally
 doubleshot # Runs content/outline files in test folder
 
-// test/outline.json
-{
-  "One": ["is equal to one"]
-};
+// test/outline.yaml
+One:
+  - is equal to one
 
 // test/content.js
 {
@@ -57,14 +56,14 @@ $ doubleshot --reporter spec
 
 ```js
 // Common outline filenames
+test/outline.yaml
 test/my_lib_outline.js
 test/basic_tests_outline.json
-test/outline.yaml
 
 // Common content filenames
+test/content.js
 test/my_lib_content.js
 test/basic_tests_outline.js
-test/content.js
 ```
 
 Alternatively, you can specify a [minimatch][minimatch] pattern to find them via `--outline` and `--content` options on the command line. By default, the [minimatch][minimatch] patterns are:
@@ -77,9 +76,10 @@ test/*content.js OR test/content/{{name}}.js
 [minimatch]: https://github.com/isaacs/minimatch
 
 ### Outline format
-In `doubleshot<=2.0.0`, there was an issue with the context ordering. The latest format is the thinnest but is running away from its [vows][vows] roots.
+Outlines can be either in `js`, [JSON][json], or [YAML][yaml]. For simplicity's sake, the majority of examples will use [YAML][yaml].
 
-[vows]: http://vowsjs.org/
+[json]: http://www.json.org/
+[yaml]: http://www.yaml.org/spec/1.2/spec.html#id2759963
 
 Any new context (i.e. `describe` in `mocha`) is an object followed by an array. This array can either contain assertions or more contexts. The array is required for ensure that actions are run in order.
 
@@ -87,21 +87,15 @@ Any assertion (i.e. `it` in `mocha`) is a string.
 
 The following outline:
 
-```js
-{
-  // 'A banana' performs a `describe`
-  'A banana': [
-    // 'is yellow' and 'has a peel' perform `it`s
-    'is yellow',
-    'has a peel',
-    {
-      'when peeled': [
-        'is white',
-        'is soft'
-      ]
-    }
-  ]
-}
+```yaml
+# 'A banana' performs a `describe`
+A banana:
+  # is yellow and has a peel perform `it`s
+  - is yellow
+  - has a peel
+  - when peeled:
+    - is white
+    - is soft
 ```
 
 compiles to:
@@ -116,6 +110,30 @@ describe('A banana', function () {
     it('is soft', contentGoesHere);
   });
 });
+```
+
+#### Using `JSON` for outlines
+Initially, `doubleshot` was developed with inspiration from [vows][vows]. However, the [JSON][json] format was unordered we required to move to an ordered JSON format. This was taken from [YAML][yaml].
+
+[vows]: http://vowsjs.org/
+
+The format of the [JSON][json] is the same as the [YAML][yaml]; each context is a new object containing an array of either more contexts or assertions.
+
+```json
+{
+  // 'A banana' performs a `describe`
+  'A banana': [
+    // 'is yellow' and 'has a peel' perform `it`s
+    'is yellow',
+    'has a peel',
+    {
+      'when peeled': [
+        'is white',
+        'is soft'
+      ]
+    }
+  ]
+}
 ```
 
 ### Content format
@@ -163,7 +181,7 @@ In `doubleshot`, this is strongly encouraged to prevent global namespace polluti
 
 Here is a usage in `mocha`:
 
-```
+```js
 describe('A banana', function () {
   before(function () {
     // Save this banana to the test context
@@ -205,13 +223,10 @@ If you have any keys in one set that are not matched to another, `doubleshot` wi
 
 When we combine this outline:
 
-```js
-{
-  'A banana': [
-    'is yellow',
-    'has a peel'
-  ]
-}
+```yaml
+A banana:
+  - is yellow
+  - has a peel
 ```
 
 and this content:
@@ -285,10 +300,8 @@ You can infinitely chain aliases and expansions (e.g. `"1 + 2"` -> `["1", "+ 2"]
 Here is a full example of using expansion and aliasing:
 
 ```js
-// outline.json
-{
-  "1 + 2": ["=3"]
-}
+// outline.yaml
+"1 + 2": ["= 3"]
 
 // content.js
 {
@@ -308,14 +321,14 @@ Here is a full example of using expansion and aliasing:
 }
 
 // Runs test as
-describe('One plus two', function () {
+describe('1 + 2', function () {
   before(function () {
     // These are contained inside functions but have the same effect
     this.sum = 1;
     this.sum += 2;
   });
 
-  it('is equal to three', function () {
+  it('= 3', function () {
     assert.strictEqual(this.sum, 3);
   });
 });
