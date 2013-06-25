@@ -20,8 +20,8 @@ npm install -g doubleshot # Installs doubleshot globally
 doubleshot # Runs content/outline files in test folder
 
 // test/outline.yaml
-One:
-  - is equal to one
+'One':
+  - 'is equal to one'
 
 // test/content.js
 {
@@ -224,9 +224,9 @@ If you have any keys in one set that are not matched to another, `doubleshot` wi
 When we combine this outline:
 
 ```yaml
-A banana:
-  - is yellow
-  - has a peel
+'A banana':
+  - 'is yellow'
+  - 'has a peel'
 ```
 
 and this content:
@@ -301,7 +301,7 @@ Here is a full example of using expansion and aliasing:
 
 ```js
 // outline.yaml
-"1 + 2": ["= 3"]
+'1 + 2': ['= 3']
 
 // content.js
 {
