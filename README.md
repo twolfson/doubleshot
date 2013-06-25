@@ -89,13 +89,13 @@ The following outline:
 
 ```yaml
 # 'A banana' performs a `describe`
-A banana:
-  # is yellow and has a peel perform `it`s
-  - is yellow
-  - has a peel
-  - when peeled:
-    - is white
-    - is soft
+'A banana':
+  # 'is yellow' and 'has a peel' perform `it`s
+  - 'is yellow'
+  - 'has a peel'
+  - 'when peeled':
+    - 'is white'
+    - 'is soft'
 ```
 
 compiles to:
@@ -119,7 +119,7 @@ Initially, `doubleshot` was developed with inspiration from [vows][vows]. Howeve
 
 The format of the [JSON][json] is the same as the [YAML][yaml]; each context is a new object containing an array of either more contexts or assertions.
 
-```json
+```js
 {
   // 'A banana' performs a `describe`
   'A banana': [
