@@ -20,8 +20,8 @@ npm install -g doubleshot # Installs doubleshot globally
 doubleshot # Runs content/outline files in test folder
 
 // test/outline.yaml
-'One':
-  - 'is equal to one'
+One:
+  - is equal to one
 
 // test/content.js
 {
@@ -89,13 +89,13 @@ The following outline:
 
 ```yaml
 # 'A banana' performs a `describe`
-'A banana':
+A banana:
   # 'is yellow' and 'has a peel' perform `it`s
-  - 'is yellow'
-  - 'has a peel'
-  - 'when peeled':
-    - 'is white'
-    - 'is soft'
+  - is yellow
+  - has a peel
+  - when peeled:
+    - is white
+    - is soft
 ```
 
 compiles to:
