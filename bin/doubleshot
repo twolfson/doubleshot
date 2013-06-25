@@ -17,7 +17,8 @@ program
   .option('-N, --content <pattern>', 'Path to content files (minimatch accepted)');
 
 // Construct a doubleshot with mocha params
-var doubleshot = require('./_doubleshot');
+var Doubleshot = require('../lib/doubleshot'),
+    doubleshot = require('./_doubleshot');
 
 // Localize and fallback info from dir
 // DEV: Always looks like node doubleshot arg1 arg2
@@ -38,6 +39,7 @@ require('js-yaml');
 // TODO: Contemplate reading in directly from `require.extensions`
 var extensions = program.extensions.concat(['json', 'yaml', 'yml', 'node']),
     extensionStr = extensions.join(',');
+console.log(program.extensions, extensions);
 
 // Helper function to filter for existing file paths
 var path = require('path'),
@@ -91,7 +93,7 @@ var outlineFiles = resolveFiles({
 // If there are no outline files, notify the user and quit
 if (outlineFiles.length === 0) {
   console.error('No doubleshot outline files could be found.');
-  console.error('Please place them as `test/{{name}}_outline.json`, `test/outline/{{name}}.json` or specify them via `--outline`.');
+  console.error('Please place them as `test/*outline.json`, `test/outline/*.json` or specify them via `--outline`.');
   console.log('');
   program.outputHelp();
   process.exit(1);
@@ -112,6 +114,34 @@ contentFiles.forEach(doubleshot.addContent, doubleshot);
 
 // If there was a `watch` request, watch
 if (program.watch) {
+  // Overload watch utility to pull in *any* of our extensions
+  var filesExtRegexp = new RegExp('\\.(' + extensions.join('|') + ')$');
+
+  var join = path.join,
+      ignore = ['node_modules', '.git'];
+
+  function ignored(path){
+    return !~ignore.indexOf(path);
+  }
+
+  function findFiles(dir, ret){
+    ret = ret || [];
+
+    fs.readdirSync(dir)
+    .filter(ignored)
+    .forEach(function(path){
+      path = join(dir, path);
+      if (fs.statSync(path).isDirectory()) {
+        findFiles(path, ret);
+      } else if (path.match(filesExtRegexp)) {
+        ret.push(path);
+      }
+    });
+
+    return ret;
+  }
+  Doubleshot.utils.files = findFiles;
+
   // Call watch function with our files
   var files = doubleshot.files;
   doubleshot._watch(files);
