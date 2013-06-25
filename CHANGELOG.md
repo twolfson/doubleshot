@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.3.0 - Added isolation between batches to enforce module pattern between tests
+
 2.2.1 - Added test against `YAML` and updated documentation to use `YAML` over `JSON`
 
 2.2.0 - Simplified default file search, added dynamic extension to file search and `watch`, and added `YAML` support by default.
