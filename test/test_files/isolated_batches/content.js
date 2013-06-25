@@ -3,6 +3,7 @@ var assert = require('assert');
 module.exports = {
   // First batch
   'One context': function () {
+    console.log(this);
     this.context = this.context || [];
     this.context.push(1);
   },
