@@ -21,7 +21,8 @@ var kitchenSink = {
   'doubleshot': {
     'warns user when keys are unused': true,
     'warns user when keys are not found': true,
-    'can be run against a folder not labelled `test` and options exclusively': true
+    'can be run against a folder not labelled `test` and options exclusively': true,
+    'can be run against a .yaml file': true
   }
 };
 
@@ -156,6 +157,28 @@ describe('doubleshot', function () {
 
     // Run doubleshot against spec folder
     var cmd = doubleshot + ' --content spec/content.js --outline spec/outline.json';
+    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
+
+      // Assert stderr is empty
+      expect(stderr).to.equal('');
+
+      // Go back to original directory
+      process.chdir(cwd);
+
+      // Callback
+      done();
+    });
+  });
+
+  it('can be run against a .yaml file', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against spec folder
+    var cmd = doubleshot + ' yaml';
     exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
       // If there is an error, callback
       if (err) { return done(err); }
