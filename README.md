@@ -53,15 +53,26 @@ $ doubleshot --reporter spec
 ```
 
 ## Documentation
-`doubleshot` is run via the command line. By default, it attempts to find content and outline files in the `test` directory. They should match the following format.
+`doubleshot` is run via the command line. By default, it attempts to find content and outline files in the `test` directory. As long as the file name ends with either `outline` or `content`, they will be found.
 
-```shell
-test/{{name}}_outline.json OR test/outline/{{name}}.json
-test/{{name}}_content.js OR test/content/{{name}}.js
-Accepted file extensions are: `js`, `json`, `node`
+```js
+// Common outline filenames
+test/my_lib_outline.js
+test/basic_tests_outline.json
+test/outline.yaml
+
+// Common content filenames
+test/my_lib_content.js
+test/basic_tests_outline.js
+test/content.js
 ```
 
-Alternatively, you can specify a [minimatch][minimatch] pattern to find them via `--outline` and `--content` options on the command line.
+Alternatively, you can specify a [minimatch][minimatch] pattern to find them via `--outline` and `--content` options on the command line. By default, the minimatch patterns are:
+
+```shell
+test/*outline.{js,json,yaml} OR test/outline/{{name}}.{js,json,yaml}
+test/*content.js OR test/content/{{name}}.js
+```
 
 [minimatch]: https://github.com/isaacs/minimatch
 

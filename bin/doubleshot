@@ -92,7 +92,7 @@ var outlineFiles = resolveFiles({
 // If there are no outline files, notify the user and quit
 if (outlineFiles.length === 0) {
   console.error('No doubleshot outline files could be found.');
-  console.error('Please place them as `test/*outline.json`, `test/outline/*.json` or specify them via `--outline`.');
+  console.error('Please place them as `test/*outline.json`, `test/*outline.yaml`, or specify them via `--outline`.');
   console.log('');
   program.outputHelp();
   process.exit(1);
@@ -101,7 +101,7 @@ if (outlineFiles.length === 0) {
 // Similarly notify for contentFiles
 if (contentFiles.length === 0) {
   console.error('No doubleshot content files could be found.');
-  console.error('Please place them as `test/{{name}}_content.js`, `test/content/{{name}}.js` or specify them via `--content`.');
+  console.error('Please place them as `test/*content.js` or specify them via `--content`.');
   console.log('');
   program.outputHelp();
   process.exit(1);
