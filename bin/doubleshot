@@ -36,8 +36,8 @@ require('js-yaml');
 
 // Add JSON, YAML, and node to our list of extensions
 // TODO: Contemplate reading in directly from `require.extensions`
-var extensions = program.extensions.concat(['json', 'yaml', 'yml', 'node']);
-console.log(require.extensions);
+var extensions = program.extensions.concat(['json', 'yaml', 'yml', 'node']),
+    extensionStr = extensions.join(',');
 
 // Helper function to filter for existing file paths
 var path = require('path'),
@@ -53,12 +53,12 @@ function resolveFiles(params) {
 
   // If there are no outline paths, attempt to locate them in dir
   if (!paths) {
-    // Look for {{dir}}/*_outline* (e.g. test/doubleshot_outline.json)
-    files = glob.sync(dir + '/*_' + namespace + '.{js,json,node}');
+    // Look for {{dir}}/*outline* (e.g. test/doubleshot_outline.json)
+    files = glob.sync(dir + '/*' + namespace + '.{' + extensionStr + '}');
 
     // If none is found, look for {{dir}}/outline/**/* (e.g. test/outline/doubleshot.json)
     if (files.length === 0) {
-      files = glob.sync(dir + '/' + namespace + '/**/*.{js,json,node}');
+      files = glob.sync(dir + '/' + namespace + '/**/*.{' + extensionStr + '}');
     }
   } else {
   // Otherwise, resolve paths via glob
@@ -80,12 +80,12 @@ function resolveFiles(params) {
 var outlineFiles = resolveFiles({
       paths: outlinePaths,
       dir: testDir,
-      namespace: 'outline'
+      namespace: '{outline,Outline}'
     }),
     contentFiles = resolveFiles({
       paths: contentPaths,
       dir: testDir,
-      namespace: 'content'
+      namespace: '{content,Content}'
     });
 
 // If there are no outline files, notify the user and quit
