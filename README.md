@@ -224,9 +224,9 @@ If you have any keys in one set that are not matched to another, `doubleshot` wi
 When we combine this outline:
 
 ```yaml
-'A banana':
-  - 'is yellow'
-  - 'has a peel'
+A banana:
+  - is yellow
+  - has a peel
 ```
 
 and this content:
