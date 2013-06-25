@@ -22,7 +22,8 @@ var kitchenSink = {
     'warns user when keys are unused': true,
     'warns user when keys are not found': true,
     'can be run against a folder not labelled `test` and options exclusively': true,
-    'can be run against a .yaml file': true
+    'can be run against a .yaml file': true,
+    'runs batches in isolation': true
   }
 };
 
@@ -182,6 +183,25 @@ describe('doubleshot', function () {
       // Run doubleshot with mocha options
       function runDblYamlTest (cb) {
         var cmd = doubleshot + ' yaml';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
+
+  it('runs batches in isolation', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblYamlTest (cb) {
+        var cmd = doubleshot + ' isolated_batches';
         exec(cmd, cb);
       },
       // Clean up and errors from stderr
