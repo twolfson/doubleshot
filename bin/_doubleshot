@@ -262,6 +262,7 @@ program.compilers.forEach(function(c) {
   require(mod);
   extensions.push(ext);
 });
+program.extensions = extensions;
 
 var re = new RegExp('\\.(' + extensions.join('|') + ')$');
 

@@ -26,11 +26,18 @@ var glob = require('glob'),
     outlinePaths = program.outline,
     contentPaths = program.content;
 
-
 // If there is no testDir or it is an option, fallback to `test`
 if (!testDir || testDir.match(/^\-/)) {
   testDir = 'test';
 }
+
+// Load in js-yaml for automatic .yml/.yaml path resolution via `require`
+require('js-yaml');
+
+// Add JSON, YAML, and node to our list of extensions
+// TODO: Contemplate reading in directly from `require.extensions`
+var extensions = program.extensions.concat(['json', 'yaml', 'yml', 'node']);
+console.log(require.extensions);
 
 // Helper function to filter for existing file paths
 var path = require('path'),
