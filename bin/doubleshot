@@ -115,31 +115,28 @@ contentFiles.forEach(doubleshot.addContent, doubleshot);
 // If there was a `watch` request, watch
 if (program.watch) {
   // Overload watch utility to pull in *any* of our extensions
-  var filesExtRegexp = new RegExp('\\.(' + extensions.join('|') + ')$');
+  var filesExtRegexp = new RegExp('\\.(' + extensions.join('|') + ')$'),
+      join = path.join,
+      ignore = ['node_modules', '.git'],
+      ignored = function (path) {
+        return !~ignore.indexOf(path);
+      },
+      findFiles = function (dir, ret){
+        ret = ret || [];
 
-  var join = path.join,
-      ignore = ['node_modules', '.git'];
+        fs.readdirSync(dir)
+        .filter(ignored)
+        .forEach(function(path){
+          path = join(dir, path);
+          if (fs.statSync(path).isDirectory()) {
+            findFiles(path, ret);
+          } else if (path.match(filesExtRegexp)) {
+            ret.push(path);
+          }
+        });
 
-  function ignored(path){
-    return !~ignore.indexOf(path);
-  }
-
-  function findFiles(dir, ret){
-    ret = ret || [];
-
-    fs.readdirSync(dir)
-    .filter(ignored)
-    .forEach(function(path){
-      path = join(dir, path);
-      if (fs.statSync(path).isDirectory()) {
-        findFiles(path, ret);
-      } else if (path.match(filesExtRegexp)) {
-        ret.push(path);
-      }
-    });
-
-    return ret;
-  }
+        return ret;
+      };
   Doubleshot.utils.files = findFiles;
 
   // Call watch function with our files
