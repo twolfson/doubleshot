@@ -39,7 +39,6 @@ require('js-yaml');
 // TODO: Contemplate reading in directly from `require.extensions`
 var extensions = program.extensions.concat(['json', 'yaml', 'yml', 'node']),
     extensionStr = extensions.join(',');
-console.log(program.extensions, extensions);
 
 // Helper function to filter for existing file paths
 var path = require('path'),
