@@ -67,7 +67,7 @@ test/basic_tests_outline.js
 test/content.js
 ```
 
-Alternatively, you can specify a [minimatch][minimatch] pattern to find them via `--outline` and `--content` options on the command line. By default, the minimatch patterns are:
+Alternatively, you can specify a [minimatch][minimatch] pattern to find them via `--outline` and `--content` options on the command line. By default, the [minimatch][minimatch] patterns are:
 
 ```shell
 test/*outline.{js,json,yaml} OR test/outline/{{name}}.{js,json,yaml}
