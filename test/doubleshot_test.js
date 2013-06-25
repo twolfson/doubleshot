@@ -178,19 +178,16 @@ describe('doubleshot', function () {
     process.chdir(__dirname + '/test_files');
 
     // Run doubleshot against spec folder
-    var cmd = doubleshot + ' yaml';
-    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
-      // If there is an error, callback
-      if (err) { return done(err); }
-
-      // Assert stderr is empty
-      expect(stderr).to.equal('');
-
-      // Go back to original directory
-      process.chdir(cwd);
-
-      // Callback
-      done();
-    });
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblYamlTest (cb) {
+        var cmd = doubleshot + ' yaml';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
   });
 });
