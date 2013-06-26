@@ -23,7 +23,8 @@ var kitchenSink = {
     'warns user when keys are not found': true,
     'can be run against a folder not labelled `test` and options exclusively': true,
     'can be run against a .yaml file': true,
-    'runs batches in isolation': true
+    'runs batches in isolation': true,
+    'throws errors for invalid values': true
   }
 };
 
@@ -200,7 +201,7 @@ describe('doubleshot', function () {
     // Run doubleshot against spec folder
     async.waterfall([
       // Run doubleshot with mocha options
-      function runDblYamlTest (cb) {
+      function runDbIsolatedTest (cb) {
         var cmd = doubleshot + ' isolated_batches';
         exec(cmd, cb);
       },
@@ -209,5 +210,21 @@ describe('doubleshot', function () {
       // Assert the test suite ran successfully
       assertDotSuccess
     ], done);
+  });
+
+  it('throws errors for invalid values', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' invalid_values';
+    exec(cmd, function handleDblInvalidValues (err, stdout, stderr) {
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('Value of objects can only be arrays');
+
+      // Callback
+      done();
+    });
   });
 });
