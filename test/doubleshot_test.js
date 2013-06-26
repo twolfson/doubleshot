@@ -24,7 +24,9 @@ var kitchenSink = {
     'can be run against a folder not labelled `test` and options exclusively': true,
     'can be run against a .yaml file': true,
     'runs batches in isolation': true,
-    'throws errors for invalid values': true
+    'throws errors for invalid values': true,
+    'runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks': true,
+    'resets timer for long running tests': true
   }
 };
 
@@ -226,5 +228,44 @@ describe('doubleshot', function () {
       // Callback
       done();
     });
+  });
+
+  // it('runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks', function (done) {
+  //   // Move to the current directory for execution
+  //   var cwd = process.cwd();
+  //   process.chdir(__dirname + '/test_files');
+
+  //   // Run doubleshot against spec folder
+  //   async.waterfall([
+  //     // Run doubleshot with mocha options
+  //     function runDbIsolatedTest (cb) {
+  //       var cmd = doubleshot + ' after_etc_hooks';
+  //       exec(cmd, cb);
+  //     },
+  //     // Clean up and errors from stderr
+  //     cleanStdErr,
+  //     // Assert the test suite ran successfully
+  //     assertDotSuccess
+  //   ], done);
+  // });
+
+  it('resets timer for long running tests', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against spec folder
+    this.timeout(10000);
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' slow_expansions';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
   });
 });
