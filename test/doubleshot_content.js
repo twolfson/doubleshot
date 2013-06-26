@@ -16,17 +16,12 @@ module.exports = {
     assert.strictEqual(this.sum2, 1);
   },
 
-  'A test using expansion': ['Three', 'minus two', 'non-async'],
+  'A test using expansion': ['Three', 'minus two'],
   'Three': function () {
     this.sum3 = 3;
   },
-  'minus two': function (done) {
+  'minus two': function () {
     this.sum3 -= 2;
-    console.log('async!');
-    setTimeout(done, 500);
-  },
-  'non-async': function () {
-    console.log(this.sum3);
   },
   'can run properly': function () {
     assert.strictEqual(this.sum3, 1);
@@ -94,5 +89,24 @@ module.exports = {
   'is preserved during chaining': ['chained assert'],
   'chained assert': function () {
     assert.deepEqual(this.chainedContext, [1, 2, 3]);
+  },
+
+  // Another kitchen sync test
+  'Running a sync -> async -> sync context': ['sync', 'async', 'sync2'],
+  'sync': function () {
+    this.asyncSum = 1;
+  },
+  'async': function (done) {
+    var that = this;
+    setTimeout(function () {
+      that.asyncSum += 2;
+      done();
+    }, 100);
+  },
+  'sync2': function () {
+    this.asyncSum *= 2;
+  },
+  'has the contexts run in order': function () {
+    assert.strictEqual(this.asyncSum, 6);
   }
 };

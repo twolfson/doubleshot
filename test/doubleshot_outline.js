@@ -33,4 +33,9 @@ module.exports = [{
   "One more context": [
     "is preserved during chaining"
   ]
+}, {
+// Kitchen sync test regarding async behavior
+  'Running a sync -> async -> sync context': [
+    'has the contexts run in order'
+  ]
 }];
