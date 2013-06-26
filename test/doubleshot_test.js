@@ -48,7 +48,7 @@ function assertDotSuccess(stdout, cb) {
   expect(stdout).to.contain('complete');
   expect(stdout).to.not.contain('pending');
   expect(stdout).to.not.contain('failed');
-  cb();
+  cb(null, stdout);
 }
 
 // Assertions for `nyan` reporter
@@ -57,7 +57,7 @@ function assertNyanSuccess(stdout, cb) {
   // '( ^ .^)'; // Success face
   // '( - .-)'; // Pending face
   // '( o .o)'; // Fail face
-  cb();
+  cb(null, stdout);
 }
 
 // Content
@@ -230,24 +230,35 @@ describe('doubleshot', function () {
     });
   });
 
-  // it('runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks', function (done) {
-  //   // Move to the current directory for execution
-  //   var cwd = process.cwd();
-  //   process.chdir(__dirname + '/test_files');
+  it('runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-  //   // Run doubleshot against spec folder
-  //   async.waterfall([
-  //     // Run doubleshot with mocha options
-  //     function runDbIsolatedTest (cb) {
-  //       var cmd = doubleshot + ' after_etc_hooks';
-  //       exec(cmd, cb);
-  //     },
-  //     // Clean up and errors from stderr
-  //     cleanStdErr,
-  //     // Assert the test suite ran successfully
-  //     assertDotSuccess
-  //   ], done);
-  // });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' after_etc_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('global beforeAll');
+        expect(stdout).to.contain('beforeAll1');
+        expect(stdout).to.contain('global beforeEach');
+        expect(stdout).to.contain('beforeEach1');
+        expect(stdout).to.contain('afterEach1');
+        expect(stdout).to.contain('global afterEach');
+        expect(stdout).to.contain('afterAll1');
+        expect(stdout).to.contain('global afterAll');
+        cb();
+      }
+    ], done);
+  });
 
   it('resets timer for long running tests', function (done) {
     // Move to the current directory for execution
