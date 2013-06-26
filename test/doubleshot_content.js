@@ -16,12 +16,17 @@ module.exports = {
     assert.strictEqual(this.sum2, 1);
   },
 
-  'A test using expansion': ['Three', 'minus two'],
+  'A test using expansion': ['Three', 'minus two', 'non-async'],
   'Three': function () {
     this.sum3 = 3;
   },
-  'minus two': function () {
+  'minus two': function (done) {
     this.sum3 -= 2;
+    console.log('async!');
+    setTimeout(done, 500);
+  },
+  'non-async': function () {
+    console.log(this.sum3);
   },
   'can run properly': function () {
     assert.strictEqual(this.sum3, 1);
