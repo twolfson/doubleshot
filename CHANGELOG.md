@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.4.0 - Upgraded to `object-fusion2@0.2.0` for better validation against input data
+
 2.3.0 - Added isolation between batches to enforce module pattern between tests
 
 2.2.1 - Added test against `YAML` and updated documentation to use `YAML` over `JSON`

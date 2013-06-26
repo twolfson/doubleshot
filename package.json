@@ -37,7 +37,7 @@
     "glob": "~3.1.21",
     "async": "~0.2.6",
     "commander": "~1.1.1",
-    "object-fusion2": "~0.1.0",
+    "object-fusion2": "~0.2.0",
     "js-yaml": "~2.1.0"
   },
   "devDependencies": {
