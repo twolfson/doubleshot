@@ -1,30 +1,29 @@
 module.exports = {
   before: function () {
-    console.log('global before');
+    console.log('global beforeAll');
   },
   beforeEach: function () {
     console.log('global beforeEach');
   },
-  after: function () {
-    console.log('global after');
-  },
   afterEach: function () {
     console.log('global afterEach');
+  },
+  after: function () {
+    console.log('global afterAll');
   },
   'One': {
     before: function () {
       this.sum = 1;
-      console.log('before1');
+      console.log('beforeAll1');
     },
     beforeEach: function () {
-      this.sum = 1;
       console.log('beforeEach1');
-    },
-    after: function () {
-      console.log('after1');
     },
     afterEach: function () {
       console.log('afterEach1');
+    },
+    after: function () {
+      console.log('afterAll1');
     }
   },
   'plus one': function () {
