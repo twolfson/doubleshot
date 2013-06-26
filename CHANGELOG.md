@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.5.0 - Added support for local and global `after`, `beforeEach`, `afterEach` hooks
+
 2.4.0 - Upgraded to `object-fusion2@0.2.0` for better validation against input data
 
 2.3.0 - Added isolation between batches to enforce module pattern between tests

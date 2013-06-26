@@ -263,6 +263,53 @@ describe('A banana', function () {
 });
 ```
 
+### Hooks
+The normal `mocha` hooks (e.g. `after`, `beforeEach`, `afterEach`) are available on the global level and per-context level.
+
+If you provide an object instead of a function, you can define the hooks individually by name.
+
+```js
+{
+  'A banana': {
+    before: function () {
+      // Runs before *all* contexts and assertions
+      this.banana = new Banana();
+    },
+    beforeEach: function () {
+      // Runs before *each* context and assertion
+    },
+    afterEach: function () {
+      // Runs after *each* context and assertion
+    },
+    after: function () {
+      // Runs after *all* contexts and assertions
+    }
+  }
+}
+```
+
+For global hooks, define them directly on the `content`.
+
+```js
+{
+  before: function () {
+    // Runs before *all* batches
+  },
+  beforeEach: function () {
+    // Runs before *each* batch
+  },
+  afterEach: function () {
+    // Runs after *each* batch
+  },
+  after: function () {
+    // Runs after *all* batches
+  },
+  'A banana': {
+    this.banana = new Banana();
+  }
+}
+```
+
 ### Aliasing and expansion
 One of the bonus features of `doubleshot` is aliasing and expansion.
 
