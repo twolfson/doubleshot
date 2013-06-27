@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.6.1 - Moved isolated batch test to pending status
+
 2.6.0 - Removing per-batch context cleaning since issue #35 was reported
 
 2.5.0 - Added support for local and global `after`, `beforeEach`, `afterEach` hooks
