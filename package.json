@@ -1,7 +1,7 @@
 {
   "name": "doubleshot",
   "description": "Run separated BDD outlines and content on top of mocha",
-  "version": "2.6.1",
+  "version": "2.7.0",
   "homepage": "https://github.com/twolfson/doubleshot",
   "author": {
     "name": "Todd Wolfson",
