@@ -3,7 +3,6 @@ var assert = require('assert');
 module.exports = {
   // First batch
   'One context': function () {
-    console.log(this);
     this.context = this.context || [];
     this.context.push(1);
   },
@@ -14,12 +13,6 @@ module.exports = {
     this.context.push(2);
   },
   'is also isolated from other contexts': function () {
-    assert.deepEqual(this.context, [1, 2]);
-  },
-  'is also isolated2 from other contexts': function () {
-    assert.deepEqual(this.context, [1, 2]);
-  },
-  'is also isolated3 from other contexts': function () {
     assert.deepEqual(this.context, [1, 2]);
   },
 

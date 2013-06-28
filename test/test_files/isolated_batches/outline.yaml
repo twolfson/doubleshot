@@ -2,9 +2,6 @@
   - 'is isolated from other contexts':
     - 'nested':
       - 'is also isolated from other contexts'
-      - 'another':
-        - 'is also isolated2 from other contexts'
-        - 'is also isolated3 from other contexts'
 - 'Another context':
   - 'is isolated from the first context':
     - 'another nesting':
