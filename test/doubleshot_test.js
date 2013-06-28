@@ -195,7 +195,7 @@ describe('doubleshot', function () {
     ], done);
   });
 
-  it.only('runs batches in isolation', function (done) {
+  it('runs batches in isolation', function (done) {
     // Move to the current directory for execution
     var cwd = process.cwd();
     process.chdir(__dirname + '/test_files');
@@ -205,6 +205,25 @@ describe('doubleshot', function () {
       // Run doubleshot with mocha options
       function runDbIsolatedTest (cb) {
         var cmd = doubleshot + ' isolated_batches';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
+
+  it('does not interfere with shared contexts', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' nested_shared_context';
         exec(cmd, cb);
       },
       // Clean up and errors from stderr
