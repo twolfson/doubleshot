@@ -195,7 +195,7 @@ describe('doubleshot', function () {
     ], done);
   });
 
-  xit('runs batches in isolation', function (done) {
+  it.only('runs batches in isolation', function (done) {
     // Move to the current directory for execution
     var cwd = process.cwd();
     process.chdir(__dirname + '/test_files');

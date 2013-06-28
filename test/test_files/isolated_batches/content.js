@@ -16,6 +16,9 @@ module.exports = {
   'is also isolated from other contexts': function () {
     assert.deepEqual(this.context, [1, 2]);
   },
+  'is also isolated2 from other contexts': function () {
+    assert.deepEqual(this.context, [1, 2]);
+  },
 
   // Second batch
   'Another context': function () {
