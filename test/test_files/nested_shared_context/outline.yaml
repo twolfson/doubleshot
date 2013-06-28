@@ -1,0 +1,5 @@
+- 'One context':
+  - 'is isolated from other contexts':
+    - 'nested':
+      - 'is also isolated from other contexts'
+      - 'but is not isolated from its own context'
