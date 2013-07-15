@@ -5,6 +5,8 @@ var cp = require('child_process'),
     chai = require('chai'),
     expect = chai.expect;
 
+// TODO: Write test for alias not found
+
 // Outline
 // Basic tests
 var basicTests = {
