@@ -38,7 +38,8 @@
     "async": "~0.2.6",
     "commander": "~1.1.1",
     "object-fusion2": "~0.2.0",
-    "js-yaml": "~2.1.0"
+    "js-yaml": "~2.1.0",
+    "value-mapper": "~0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.3.17",
