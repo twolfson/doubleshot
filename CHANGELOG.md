@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.8.0 - Added support for aliasing and chaining global hooks. Fixed #29.
+
 2.7.0 - Added back batch isolation repairing with a test against the case in issue #35
 
 2.6.1 - Moved isolated batch test to pending status
