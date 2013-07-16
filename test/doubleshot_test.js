@@ -23,6 +23,7 @@ var kitchenSink = {
   'doubleshot': {
     'warns user when keys are unused': true,
     'warns user when keys are not found': true,
+    'warns user when aliases are not found': true,
     'can be run against a folder not labelled `test` and options exclusively': true,
     'can be run against a .yaml file': true,
     'runs batches in isolation': true,
@@ -143,6 +144,22 @@ describe('doubleshot', function () {
   it('warns user when keys are not found', function (done) {
     // Run doubleshot against unused keys files
     var cmd = doubleshot + ' --content test/test_files/keys_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
+    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
+
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('equals two');
+      expect(stderr).to.match(/not found/);
+
+      // Callback
+      done();
+    });
+  });
+
+  it('warns user when aliases are not found', function (done) {
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' --content test/test_files/aliases_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
     exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
       // If there is an error, callback
       if (err) { return done(err); }
