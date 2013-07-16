@@ -165,7 +165,7 @@ describe('doubleshot', function () {
       if (err) { return done(err); }
 
       // Assert stderr contains info about failing items
-      expect(stderr).to.contain('equals two');
+      expect(stderr).to.contain('equals too');
       expect(stderr).to.match(/not found/);
 
       // Callback
