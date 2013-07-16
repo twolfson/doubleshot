@@ -6,7 +6,7 @@ module.exports = {
     this.sum += 1;
   },
   'equals two': 'equals too',
-  'equals too': function () {
+  'equals 2': function () {
     if (this.sum !== 2) {
       throw new Error(this.sum + ' !== 2');
     }
