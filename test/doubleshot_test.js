@@ -30,7 +30,8 @@ var kitchenSink = {
     'throws errors for invalid values': true,
     'runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks': true,
     'resets timer for long running tests': true,
-    'can chain global hooks': true
+    'can chain global hooks': true,
+    'can chain local hooks': true
   }
 };
 
@@ -337,6 +338,29 @@ describe('doubleshot', function () {
       assertDotSuccess,
       function assertAllHooksRan (stdout, cb) {
         expect(stdout).to.contain('global beforeAll1\nglobal beforeAll2');
+        cb();
+      }
+    ], done);
+  });
+
+  it('can chain local hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' complex_local_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('local afterAll1\nlocal afterAll2');
         cb();
       }
     ], done);
