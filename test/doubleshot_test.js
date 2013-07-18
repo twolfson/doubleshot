@@ -18,20 +18,26 @@ var basicTests = {
   }
 };
 
+var intermediateTests = {
+  'doubleshot': {
+    'can be run against a folder not labelled `test` and options exclusively': true,
+    'can be run against a .yaml file': true,
+    'resets timer for long running tests': true,
+    'can chain global hooks': true,
+    'can chain local hooks': true
+  }
+};
+
 // Kitchen sink
 var kitchenSink = {
   'doubleshot': {
     'warns user when keys are unused': true,
     'warns user when keys are not found': true,
     'warns user when aliases are not found': true,
-    'can be run against a folder not labelled `test` and options exclusively': true,
-    'can be run against a .yaml file': true,
     'runs batches in isolation': true,
     'throws errors for invalid values': true,
     'runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks': true,
-    'resets timer for long running tests': true,
-    'can chain global hooks': true,
-    'can chain local hooks': true
+    'throws errors for aliasing within objects to other objects': true
   }
 };
 
@@ -364,5 +370,21 @@ describe('doubleshot', function () {
         cb();
       }
     ], done);
+  });
+
+  it('throws errors for aliasing within objects to other objects', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' invalid_object_object_alias';
+    exec(cmd, function handleDblInvalidValues (err, stdout, stderr) {
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('Aliasing within an object to another object is not allowed');
+
+      // Callback
+      done();
+    });
   });
 });
