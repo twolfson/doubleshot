@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.9.0 - Added support for aliasing and chaining local object hooks. Fixed #30.
+
 2.8.0 - Added support for aliasing and chaining global hooks. Fixed #29.
 
 2.7.0 - Added back batch isolation repairing with a test against the case in issue #35
