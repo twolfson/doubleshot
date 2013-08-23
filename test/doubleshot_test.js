@@ -450,7 +450,7 @@ describe('doubleshot', function () {
       // Assert the test suite ran successfully
       assertDotSuccess,
       function assertAllHooksRan (stdout, cb) {
-        expect(stdout).to.contain('chainObjectAlias beforeAll1\nchainObjectAlias afterAll1');
+        expect(stdout).to.match(/chainObjectAlias beforeAll1\n.*chainObjectAlias afterAll1/);
         cb();
       }
     ], done);

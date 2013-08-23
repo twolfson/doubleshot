@@ -4,11 +4,11 @@ module.exports = {
       this.sum = 1;
     },
     after:  [function () {
-      console.log('chainedObjectAlias afterAll1');
+      console.log('chainObjectAlias afterAll1');
     }]
   }, 'alias1'],
   'alias1': function () {
-    console.log('chainedObjectAlias beforeAll1');
+    console.log('chainObjectAlias beforeAll1');
   },
 
   'plus one': function () {
