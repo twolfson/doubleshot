@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.11.0 - Added Travis CI to repo
+
 2.10.0 - Cleaned up `doubleshot.loadFiles` by breaking it down.
 
 2.9.0 - Added support for aliasing and chaining local object hooks. Fixed #30.
