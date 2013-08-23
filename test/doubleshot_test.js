@@ -409,4 +409,27 @@ describe('doubleshot', function () {
       }
     ], done);
   });
+
+  it('chains chains of chains hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' chained_chained_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('afterAll1\nafterAll2\nafterAll3\nafterAll4');
+        cb();
+      }
+    ], done);
+  });
 });
