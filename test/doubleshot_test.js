@@ -404,7 +404,7 @@ describe('doubleshot', function () {
       // Assert the test suite ran successfully
       assertDotSuccess,
       function assertAllHooksRan (stdout, cb) {
-        expect(stdout).to.contain('afterAll1\nafterAll2');
+        expect(stdout).to.contain('chainedAfter afterAll1\nchainedAfter afterAll2');
         cb();
       }
     ], done);
@@ -427,7 +427,7 @@ describe('doubleshot', function () {
       // Assert the test suite ran successfully
       assertDotSuccess,
       function assertAllHooksRan (stdout, cb) {
-        expect(stdout).to.contain('afterAll1\nafterAll2\nafterAll3\nafterAll4');
+        expect(stdout).to.contain('chainedChained afterAll1\nchainedChained afterAll2');
         cb();
       }
     ], done);

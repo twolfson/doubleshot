@@ -4,11 +4,11 @@ module.exports = {
       this.sum = 1;
     },
     after: function () {
-      console.log('afterAll1');
+      console.log('chainedAfter afterAll1');
     }
   }, {
     after: function () {
-      console.log('afterAll2');
+      console.log('chainedAfter afterAll2');
     }
   }],
   'plus one': function () {

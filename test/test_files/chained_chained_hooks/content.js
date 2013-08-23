@@ -4,21 +4,14 @@ module.exports = {
       this.sum = 1;
     },
     after:  [function () {
-      console.log('local afterAll1');
-    }, 'alias1']
-  }, 'chain1', 'alias3'],
+      console.log('chainedChained afterAll1');
+    }]
+  }, 'chain1'],
   'chain1': ['chain2'],
   'chain2': {
     after:  [function () {
-      console.log('local afterAll3');
+      console.log('chainedChained afterAll2');
     }]
-  },
-  'alias1': 'alias2',
-  'alias2': function () {
-    console.log('local afterAll2');
-  },
-  'alias3': function () {
-    console.log('local afterAll4');
   },
 
   'plus one': function () {
