@@ -432,4 +432,27 @@ describe('doubleshot', function () {
       }
     ], done);
   });
+
+  it.only('chains objects and aliases hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
+
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' chained_object_and_alias';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('chainObjectAlias beforeAll1\nchainObjectAlias afterAll1');
+        cb();
+      }
+    ], done);
+  });
 });
