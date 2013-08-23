@@ -387,7 +387,7 @@ describe('doubleshot', function () {
     });
   });
 
-  it.only('chains `after` hooks', function (done) {
+  it.skip('chains `after` hooks', function (done) {
     // Move to the current directory for execution
     var cwd = process.cwd();
     process.chdir(__dirname + '/test_files');
