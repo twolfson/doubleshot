@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.12.0 - Fixed chaining of objects
+
 2.11.0 - Added Travis CI to repo
 
 2.10.0 - Cleaned up `doubleshot.loadFiles` by breaking it down.
