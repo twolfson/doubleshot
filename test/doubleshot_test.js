@@ -433,7 +433,7 @@ describe('doubleshot', function () {
     ], done);
   });
 
-  it.only('chains objects and aliases hooks', function (done) {
+  it('chains objects and aliases hooks', function (done) {
     // Move to the current directory for execution
     var cwd = process.cwd();
     process.chdir(__dirname + '/test_files');
