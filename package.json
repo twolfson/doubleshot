@@ -1,7 +1,7 @@
 {
   "name": "doubleshot",
   "description": "Run separated BDD outlines and content on top of mocha",
-  "version": "2.12.0",
+  "version": "2.13.0",
   "homepage": "https://github.com/twolfson/doubleshot",
   "author": {
     "name": "Todd Wolfson",
@@ -39,7 +39,7 @@
     "commander": "~1.1.1",
     "object-fusion2": "~0.2.0",
     "js-yaml": "~2.1.0",
-    "value-mapper": "~0.2.0"
+    "value-mapper": "~1.0.0"
   },
   "devDependencies": {
     "grunt": "~0.3.17",
