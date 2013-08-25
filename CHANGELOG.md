@@ -1,4 +1,6 @@
 # doubleshot changelog
+2.13.0 - Refactored `mapContent` and upgraded to `value-mapper@1.0.0`
+
 2.12.0 - Fixed chaining of objects
 
 2.11.0 - Added Travis CI to repo
