@@ -74,388 +74,388 @@ function assertNyanSuccess(stdout, cb) {
 // Basic tests
 var path = require('path'),
     doubleshot = 'node ' + path.resolve(__dirname, '../bin/doubleshot');
-// describe('doubleshot', function () {
-//   it('reads the `test` directory implicitly', function (done) {
-//     async.waterfall([
-//       // Run doubleshot implicitly
-//       function runDblImplicitly (cb) {
-//         exec(doubleshot, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess
-//     ], done);
-//   });
+describe('doubleshot', function () {
+  it('reads the `test` directory implicitly', function (done) {
+    async.waterfall([
+      // Run doubleshot implicitly
+      function runDblImplicitly (cb) {
+        exec(doubleshot, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
 
-//   it('allows for usage of `mocha` options', function (done) {
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDblMochaOptions (cb) {
-//         var cmd = doubleshot + ' --reporter nyan';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertNyanSuccess
-//     ], done);
-//   });
+  it('allows for usage of `mocha` options', function (done) {
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblMochaOptions (cb) {
+        var cmd = doubleshot + ' --reporter nyan';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertNyanSuccess
+    ], done);
+  });
 
-//   it('allows for explicit directory specification', function (done) {
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDblMochaOptions (cb) {
-//         var cmd = doubleshot + ' test';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess
-//     ], done);
-//   });
+  it('allows for explicit directory specification', function (done) {
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblMochaOptions (cb) {
+        var cmd = doubleshot + ' test';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
 
-//   it('allows for explicity file (and pattern) matching alongside mocha options', function (done) {
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDblMochaOptions (cb) {
-//         var cmd = doubleshot + ' --outline test/doubleshot_outline.js --content test/doubleshot_content.js --reporter nyan';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertNyanSuccess
-//     ], done);
-//   });
-// });
+  it('allows for explicity file (and pattern) matching alongside mocha options', function (done) {
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblMochaOptions (cb) {
+        var cmd = doubleshot + ' --outline test/doubleshot_outline.js --content test/doubleshot_content.js --reporter nyan';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertNyanSuccess
+    ], done);
+  });
+});
 
-// describe('doubleshot', function () {
-//   it('warns user when keys are unused', function (done) {
-//     // Run doubleshot against unused keys files
-//     var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
-//     exec(cmd, function handleDblUnusedKeys (err, stdout, stderr) {
-//       // If there is an error, callback
-//       if (err) { return done(err); }
+describe('doubleshot', function () {
+  it('warns user when keys are unused', function (done) {
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
+    exec(cmd, function handleDblUnusedKeys (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
 
-//       // Assert stderr contains info about failing items
-//       expect(stderr).to.contain('equals three');
-//       expect(stderr).to.contain('not used');
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('equals three');
+      expect(stderr).to.contain('not used');
 
-//       // Callback
-//       done();
-//     });
-//   });
+      // Callback
+      done();
+    });
+  });
 
-//   it('warns user when keys are not found', function (done) {
-//     // Run doubleshot against unused keys files
-//     var cmd = doubleshot + ' --content test/test_files/keys_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
-//     exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
-//       // If there is an error, callback
-//       if (err) { return done(err); }
+  it('warns user when keys are not found', function (done) {
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' --content test/test_files/keys_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
+    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
 
-//       // Assert stderr contains info about failing items
-//       expect(stderr).to.contain('equals two');
-//       expect(stderr).to.match(/not found/);
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('equals two');
+      expect(stderr).to.match(/not found/);
 
-//       // Callback
-//       done();
-//     });
-//   });
+      // Callback
+      done();
+    });
+  });
 
-//   it('warns user when aliases are not found', function (done) {
-//     // Run doubleshot against unused keys files
-//     var cmd = doubleshot + ' --content test/test_files/aliases_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
-//     exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
-//       // If there is an error, callback
-//       if (err) { return done(err); }
+  it('warns user when aliases are not found', function (done) {
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' --content test/test_files/aliases_not_found/content.js --outline test/test_files/keys_not_found/outline.json';
+    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
 
-//       // Assert stderr contains info about failing items
-//       expect(stderr).to.contain('equals too');
-//       expect(stderr).to.match(/not found/);
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('equals too');
+      expect(stderr).to.match(/not found/);
 
-//       // Callback
-//       done();
-//     });
-//   });
+      // Callback
+      done();
+    });
+  });
 
-//   it('can be run against a folder not labelled `test` and options exclusively', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('can be run against a folder not labelled `test` and options exclusively', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     var cmd = doubleshot + ' --content spec/content.js --outline spec/outline.json';
-//     exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
-//       // If there is an error, callback
-//       if (err) { return done(err); }
+    // Run doubleshot against spec folder
+    var cmd = doubleshot + ' --content spec/content.js --outline spec/outline.json';
+    exec(cmd, function handleDblKeysNotFound (err, stdout, stderr) {
+      // If there is an error, callback
+      if (err) { return done(err); }
 
-//       // Assert stderr is empty
-//       expect(stderr).to.equal('');
+      // Assert stderr is empty
+      expect(stderr).to.equal('');
 
-//       // Go back to original directory
-//       process.chdir(cwd);
+      // Go back to original directory
+      process.chdir(cwd);
 
-//       // Callback
-//       done();
-//     });
-//   });
+      // Callback
+      done();
+    });
+  });
 
-//   it('can be run against a .yaml file', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('can be run against a .yaml file', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDblYamlTest (cb) {
-//         var cmd = doubleshot + ' yaml';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDblYamlTest (cb) {
+        var cmd = doubleshot + ' yaml';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
 
-//   it('runs batches in isolation', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('runs batches in isolation', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' isolated_batches';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' isolated_batches';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
 
-//   it('does not interfere with shared contexts', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('does not interfere with shared contexts', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' nested_shared_context';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' nested_shared_context';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
 
-//   it('throws errors for invalid values', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('throws errors for invalid values', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against unused keys files
-//     var cmd = doubleshot + ' invalid_values';
-//     exec(cmd, function handleDblInvalidValues (err, stdout, stderr) {
-//       // Assert stderr contains info about failing items
-//       expect(stderr).to.contain('Value of objects can only be arrays');
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' invalid_values';
+    exec(cmd, function handleDblInvalidValues (err, stdout, stderr) {
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('Value of objects can only be arrays');
 
-//       // Callback
-//       done();
-//     });
-//   });
+      // Callback
+      done();
+    });
+  });
 
-//   it('runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('runs global and local `before`, `beforeEach`, `afterEach` and `after` hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' after_etc_hooks';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess,
-//       function assertAllHooksRan (stdout, cb) {
-//         expect(stdout).to.contain('global beforeAll');
-//         expect(stdout).to.contain('beforeAll1');
-//         expect(stdout).to.contain('global beforeEach');
-//         expect(stdout).to.contain('beforeEach1');
-//         expect(stdout).to.contain('afterEach1');
-//         expect(stdout).to.contain('global afterEach');
-//         expect(stdout).to.contain('afterAll1');
-//         expect(stdout).to.contain('global afterAll');
-//         cb();
-//       }
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' after_etc_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('global beforeAll');
+        expect(stdout).to.contain('beforeAll1');
+        expect(stdout).to.contain('global beforeEach');
+        expect(stdout).to.contain('beforeEach1');
+        expect(stdout).to.contain('afterEach1');
+        expect(stdout).to.contain('global afterEach');
+        expect(stdout).to.contain('afterAll1');
+        expect(stdout).to.contain('global afterAll');
+        cb();
+      }
+    ], done);
+  });
 
-//   it('resets timer for long running tests', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('resets timer for long running tests', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     this.timeout(10000);
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' slow_expansions';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    this.timeout(10000);
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' slow_expansions';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess
+    ], done);
+  });
 
-//   it('can chain global hooks', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('can chain global hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' complex_global_hooks';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess,
-//       function assertAllHooksRan (stdout, cb) {
-//         expect(stdout).to.contain('global beforeAll1\nglobal beforeAll2');
-//         cb();
-//       }
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' complex_global_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('global beforeAll1\nglobal beforeAll2');
+        cb();
+      }
+    ], done);
+  });
 
-//   it('can chain local hooks', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('can chain local hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' complex_local_hooks';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess,
-//       function assertAllHooksRan (stdout, cb) {
-//         expect(stdout).to.contain('local afterAll1\nlocal afterAll2');
-//         cb();
-//       }
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' complex_local_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('local afterAll1\nlocal afterAll2');
+        cb();
+      }
+    ], done);
+  });
 
-//   it('throws errors for aliasing within objects to other objects', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('throws errors for aliasing within objects to other objects', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against unused keys files
-//     var cmd = doubleshot + ' invalid_object_object_alias';
-//     exec(cmd, function handleDblInvalidValues (err, stdout, stderr) {
-//       // Assert stderr contains info about failing items
-//       expect(stderr).to.contain('Aliasing within an object to another object is not allowed');
+    // Run doubleshot against unused keys files
+    var cmd = doubleshot + ' invalid_object_object_alias';
+    exec(cmd, function handleDblInvalidValues (err, stdout, stderr) {
+      // Assert stderr contains info about failing items
+      expect(stderr).to.contain('Aliasing within an object to another object is not allowed');
 
-//       // Callback
-//       done();
-//     });
-//   });
+      // Callback
+      done();
+    });
+  });
 
-//   it('chains `after` hooks', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('chains `after` hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' chained_after_hooks';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess,
-//       function assertAllHooksRan (stdout, cb) {
-//         expect(stdout).to.contain('chainedAfter afterAll1\nchainedAfter afterAll2');
-//         cb();
-//       }
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' chained_after_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('chainedAfter afterAll1\nchainedAfter afterAll2');
+        cb();
+      }
+    ], done);
+  });
 
-//   it('chains chains of chains hooks', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('chains chains of chains hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' chained_chained_hooks';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess,
-//       function assertAllHooksRan (stdout, cb) {
-//         expect(stdout).to.contain('chainedChained afterAll1\nchainedChained afterAll2');
-//         cb();
-//       }
-//     ], done);
-//   });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' chained_chained_hooks';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.contain('chainedChained afterAll1\nchainedChained afterAll2');
+        cb();
+      }
+    ], done);
+  });
 
-//   it('chains objects and aliases hooks', function (done) {
-//     // Move to the current directory for execution
-//     var cwd = process.cwd();
-//     process.chdir(__dirname + '/test_files');
+  it('chains objects and aliases hooks', function (done) {
+    // Move to the current directory for execution
+    var cwd = process.cwd();
+    process.chdir(__dirname + '/test_files');
 
-//     // Run doubleshot against spec folder
-//     async.waterfall([
-//       // Run doubleshot with mocha options
-//       function runDbIsolatedTest (cb) {
-//         var cmd = doubleshot + ' chained_object_and_alias';
-//         exec(cmd, cb);
-//       },
-//       // Clean up and errors from stderr
-//       cleanStdErr,
-//       // Assert the test suite ran successfully
-//       assertDotSuccess,
-//       function assertAllHooksRan (stdout, cb) {
-//         expect(stdout).to.match(/chainObjectAlias beforeAll1\n.*chainObjectAlias afterAll1/);
-//         cb();
-//       }
-//     ], done);
-//   });
-// });
+    // Run doubleshot against spec folder
+    async.waterfall([
+      // Run doubleshot with mocha options
+      function runDbIsolatedTest (cb) {
+        var cmd = doubleshot + ' chained_object_and_alias';
+        exec(cmd, cb);
+      },
+      // Clean up and errors from stderr
+      cleanStdErr,
+      // Assert the test suite ran successfully
+      assertDotSuccess,
+      function assertAllHooksRan (stdout, cb) {
+        expect(stdout).to.match(/chainObjectAlias beforeAll1\n.*chainObjectAlias afterAll1/);
+        cb();
+      }
+    ], done);
+  });
+});
 
 describe('doubleshot', function () {
   describe('running a passing test suite', function () {
