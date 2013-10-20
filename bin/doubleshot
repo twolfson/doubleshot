@@ -143,10 +143,10 @@ if (program.watch) {
   doubleshot._watch(files);
 } else {
 // Otherwise, run doubleshot
-  doubleshot.run(function () {
+  doubleshot.run(function (code) {
     // DEV: On Windows machines, process.exit permaturely occurs before reporter is done. This is to delay that.
     setTimeout(function () {
-      process.exit();
+      process.exit(code);
     }, 15);
   });
 }

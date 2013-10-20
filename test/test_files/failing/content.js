@@ -3,7 +3,7 @@ module.exports = {
     this.sum = 1;
   },
   'plus one': function () {
-    this.sum += 1;
+    throw Error('No.');
   },
   'equals two': function () {
     if (this.sum !== 2) {
