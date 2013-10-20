@@ -132,6 +132,20 @@ describe('doubleshot', function () {
 });
 
 describe('doubleshot', function () {
+  describe('running a passing test suite', function () {
+    it('exits with 0', function () {
+
+    });
+  });
+
+  describe('running a failing test suite', function () {
+    it('exits with a non-zero value', function () {
+
+    });
+  });
+});
+
+describe('doubleshot', function () {
   it('warns user when keys are unused', function (done) {
     // Run doubleshot against unused keys files
     var cmd = doubleshot + ' --content test/test_files/unused_keys/content.js --outline test/test_files/unused_keys/outline.json';
