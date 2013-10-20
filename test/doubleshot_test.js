@@ -475,7 +475,7 @@ describe('doubleshot', function () {
     });
 
     it('exits with 0', function () {
-      expect(this.err.code).to.equal(0);
+      expect(this.err).to.equal(null);
     });
   });
 
@@ -496,6 +496,7 @@ describe('doubleshot', function () {
     });
 
     it('exits with a non-zero value', function () {
+      expect(this.err).to.not.equal(null);
       expect(this.err.code).to.not.equal(0);
     });
   });
